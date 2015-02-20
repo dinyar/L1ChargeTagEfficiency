@@ -11,34 +11,36 @@ gROOT.SetBatch(kTRUE);
 efficiencyList = []
 # TODO: Axis labels
 # Entries: Label for histogram (Will be used for filename and title) | binning | parameters used for project functions
-efficiencyList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_cs"], cutDict["recoPt5"], []])
-efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-efficiencyList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_us"], cutDict["recoPt5"], []])
-efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], []])
-efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+efficiencyList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_cs"], cutDict["recoPt5"]])
+efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_us"], cutDict["recoPt5"]])
+efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
 # TODO: Add invariant calculation.
 # TODO: Add 2-D hist showing efficiency for pT of both muons.
+
+stackList = []
+stackList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
 
 rateList = []
 rateList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["recoPt5"]])
@@ -69,6 +71,9 @@ ntuple = f.Get("ntuple")
 dataset = "2012D-Muonia"
 for varList in efficiencyList:
     generateEfficiencyHist(varList, dataset)
+
+for varList in stackList:
+    generateEfficiencyStack(varList, dataset)
 
 for varList in rateList:
     generateRateHist(varList, dataset)
