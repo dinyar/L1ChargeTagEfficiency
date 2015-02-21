@@ -11,47 +11,47 @@ gROOT.SetBatch(kTRUE);
 efficiencyList = []
 # TODO: Axis labels
 # Entries: Label for histogram (Will be used for filename and title) | binning | parameters used for project functions
-efficiencyList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_cs"], cutDict["recoPt5"]])
-efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
-efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
-efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
-efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
-efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
-efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
-efficiencyList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_us"], cutDict["recoPt5"]])
-efficiencyList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
-efficiencyList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
-efficiencyList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
-efficiencyList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
-efficiencyList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
-efficiencyList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["deltaR_reco", 100, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_cs"], cutDict["recoPt5"]])
+efficiencyList.append(["mu1_recoPt", 50, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoEta", 50, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoEta", 50, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoPhi", 50, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPhi", 50, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
+efficiencyList.append(["deltaR_reco", 100, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_us"], cutDict["recoPt5"]])
+efficiencyList.append(["mu1_recoPt", 50, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoEta", 50, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoEta", 50, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu1_recoPhi", 50, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
+efficiencyList.append(["mu2_recoPhi", 50, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"]])
 # TODO: Add invariant calculation.
 # TODO: Add 2-D hist showing efficiency for pT of both muons.
 
 stackList = []
-stackList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-stackList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-stackList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-stackList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-stackList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-stackList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-stackList.append(["mu1_recoPt", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-stackList.append(["mu2_recoPt", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-stackList.append(["mu1_recoEta", 25, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-stackList.append(["mu2_recoEta", 25, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
-stackList.append(["mu1_recoPhi", 25, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
-stackList.append(["mu2_recoPhi", 25, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoPt", 50, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoEta", 50, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoEta", 50, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoPhi", 50, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPhi", 50, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoPt", 50, 0, 50, "pT1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoEta", 50, -2.6, 2.6, "Eta1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoEta", 50, -2.6, 2.6, "Eta2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
+stackList.append(["mu1_recoPhi", 50, -3.2, 3.2, "Phi1_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu1"]])
+stackList.append(["mu2_recoPhi", 50, -3.2, 3.2, "Phi2_reco", cutDict["gmtPt1_us"], cutDict["recoPt1"], stackCutDict["subsystems_mu2"]])
 
 rateList = []
-rateList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["recoPt5"]])
-rateList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_cs"]])
-rateList.append(["deltaR_reco", 63, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_us"]])
-rateList.append(["pt1_reco", 25, 0, 50, "pT1_reco", cutDict["recoPt1"]]) # Plot reco pT with cut on reco pT
-rateList.append(["pt2_reco", 25, 0, 50, "pT2_reco", cutDict["recoPt1"]]) # Plot reco pT with cut on reco pT
-rateList.append(["pt1_reco", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"]]) # Plot reco pT with cut on GMT pT and correct charge
-rateList.append(["pt1_reco", 25, 0, 50, "pT1_reco", cutDict["gmtPt1_us"]]) # Plot reco pT with cut on GMT pT and usable charge
-rateList.append(["pt2_reco", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"]]) # Plot reco pT with cut on GMT pT and correct charge
-rateList.append(["pt2_reco", 25, 0, 50, "pT2_reco", cutDict["gmtPt1_us"]]) # Plot reco pT with cut on GMT pT and usable charge
+rateList.append(["deltaR_reco", 100, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["recoPt5"]])
+rateList.append(["deltaR_reco", 100, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_cs"]])
+rateList.append(["deltaR_reco", 100, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["gmtPt5_us"]])
+rateList.append(["pt1_reco", 50, 0, 50, "pT1_reco", cutDict["recoPt1"]]) # Plot reco pT with cut on reco pT
+rateList.append(["pt2_reco", 50, 0, 50, "pT2_reco", cutDict["recoPt1"]]) # Plot reco pT with cut on reco pT
+rateList.append(["pt1_reco", 50, 0, 50, "pT1_reco", cutDict["gmtPt1_cs"]]) # Plot reco pT with cut on GMT pT and correct charge
+rateList.append(["pt1_reco", 50, 0, 50, "pT1_reco", cutDict["gmtPt1_us"]]) # Plot reco pT with cut on GMT pT and usable charge
+rateList.append(["pt2_reco", 50, 0, 50, "pT2_reco", cutDict["gmtPt1_cs"]]) # Plot reco pT with cut on GMT pT and correct charge
+rateList.append(["pt2_reco", 50, 0, 50, "pT2_reco", cutDict["gmtPt1_us"]]) # Plot reco pT with cut on GMT pT and usable charge
 
 eff2Dlist = []
 # eff2Dlist.append(["mu1_recoPtEta", 25, 0, 50, 25, -2.6, 2.6, "pT1_reco:Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
