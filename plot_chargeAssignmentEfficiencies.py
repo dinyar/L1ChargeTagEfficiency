@@ -4,6 +4,7 @@ from ROOT import *
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../L1AnalysisHelpers"))
 from CreateHistograms import *
+from dataset_name import *
 
 gROOT.Reset()
 gROOT.SetBatch(kTRUE);
@@ -55,6 +56,12 @@ rateList.append(["mu1_recoPt", 50, 0, 50, "pT1_reco", cutDict["diMu-gmtPt1_us"]]
 rateList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["diMu-gmtPt1_cs"]]) # Plot reco pT with cut on GMT pT and correct charge
 rateList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["diMu-gmtPt1_us"]]) # Plot reco pT with cut on GMT pT and usable charge
 
+rateStackList = []
+rateStackList.append(["mu1_recoEta", 50, -2.6, 2.6, "Eta1_reco", cutDict["diMu-recoPt1"], stackCutDict["subsystems_mu1"]])
+rateStackList.append(["mu2_recoEta", 50, -2.6, 2.6, "Eta2_reco", cutDict["diMu-recoPt1"], stackCutDict["subsystems_mu2"]])
+rateStackList.append(["mu1_recoPt", 50, 0, 50, "pT1_reco", cutDict["diMu-recoPt1"], stackCutDict["subsystems_mu1"]]) # Plot reco pT with cut on reco pT
+rateStackList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["diMu-recoPt1"], stackCutDict["subsystems_mu2"]]) # Plot reco pT with cut on reco pT
+
 eff2Dlist = []
 # eff2Dlist.append(["mu1_recoPtEta", 25, 0, 50, 25, -2.6, 2.6, "pT1_reco:Eta1_reco", cutDict["gmtPt1_cs"], cutDict["recoPt1"]])
 eff2Dlist.append(["mu1_recoPtEta", 25, 0, 50, 25, -2.6, 2.6, "Eta1_reco:pT1_reco", cutDict["diMu-gmtPt1_cs"], cutDict["diMu-recoPt1"]])
@@ -66,11 +73,11 @@ rate2Dlist = []
 rate2Dlist.append(["mu1_recoPtEta", 25, 0, 50, 25, -2.6, 2.6, "Eta1_reco:pT1_reco", cutDict["diMu-gmtPt1_cs"]])
 rate2Dlist.append(["mu2_recoPtEta", 25, 0, 50, 25, -2.6, 2.6, "Eta2_reco:pT2_reco", cutDict["diMu-gmtPt1_cs"]])
 
+
 f = TFile.Open("DiMuNtuple.root")
 
 ntuple = f.Get("ntuple")
 
-dataset = "2012D-Muonia"
 for varList in efficiencyList:
     generateEfficiencyHist(varList, dataset)
 
@@ -79,6 +86,9 @@ for varList in stackList:
 
 for varList in rateList:
     generateRateHist(varList, dataset)
+
+for varList in rateStackList:
+    generateRateStack(varList, dataset)
 
 for varList in eff2Dlist:
     generate2DEfficiencyHist(varList, dataset)
