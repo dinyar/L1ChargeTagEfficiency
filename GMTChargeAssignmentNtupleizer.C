@@ -43,13 +43,13 @@ Double_t pig = acos(-1.);
 Int_t onedhisto_nbins = 60;
 Int_t twodhisto_nbins = 36;
 
-class L1MuEff_ChargeAssignment_ntupleCreator : public L1Ntuple {
+class GMTChargeAssignmentNtupleizer : public L1Ntuple {
  public:
   // constructor
-  L1MuEff_ChargeAssignment_ntupleCreator(std::string filename)
+  GMTChargeAssignmentNtupleizer(std::string filename)
       : L1Ntuple(filename) {}
-  L1MuEff_ChargeAssignment_ntupleCreator() : L1Ntuple() {}
-  ~L1MuEff_ChargeAssignment_ntupleCreator() {}
+  GMTChargeAssignmentNtupleizer() : L1Ntuple() {}
+  ~GMTChargeAssignmentNtupleizer() {}
 
   // main function macro : arguments can be adpated to your need
   void run(Long64_t nevents);
@@ -133,7 +133,7 @@ class L1MuEff_ChargeAssignment_ntupleCreator : public L1Ntuple {
 // --------------------------------------------------------------------
 // run function
 // --------------------------------------------------------------------
-void L1MuEff_ChargeAssignment_ntupleCreator::run(Long64_t nevents) {
+void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
   toggleBranches();
 
   // Create ntuple
@@ -234,7 +234,7 @@ void L1MuEff_ChargeAssignment_ntupleCreator::run(Long64_t nevents) {
   out->Write();
 }
 
-void L1MuEff_ChargeAssignment_ntupleCreator::fillNtuple(
+void GMTChargeAssignmentNtupleizer::fillNtuple(
     int recoMu1, int recoMu2, int gmtMu1, int gmtMu2,
     std::pair<bool, bool> diMuMatch, std::vector<std::string> contDict,
     Float_t ntupleValues[]) {
@@ -331,7 +331,7 @@ void L1MuEff_ChargeAssignment_ntupleCreator::fillNtuple(
   }
 }
 
-bool L1MuEff_ChargeAssignment_ntupleCreator::trigcuts() {
+bool GMTChargeAssignmentNtupleizer::trigcuts() {
   bool cond;
   bool DTAct = std::find(event_->hlt.begin(), event_->hlt.end(),
                          "HLT_Activity_DT") != event_->hlt.end();
@@ -341,7 +341,7 @@ bool L1MuEff_ChargeAssignment_ntupleCreator::trigcuts() {
   return cond;
 }
 
-bool L1MuEff_ChargeAssignment_ntupleCreator::sysmucuts(int imu, int iSys,
+bool GMTChargeAssignmentNtupleizer::sysmucuts(int imu, int iSys,
                                                        int what, float ptcut) {
   bool condeta = false;
   if (iSys == DT || iSys == RPCb) condeta = (fabs(recoMuon_->eta[imu]) < 1.05);
@@ -371,11 +371,11 @@ bool L1MuEff_ChargeAssignment_ntupleCreator::sysmucuts(int imu, int iSys,
 
   return cond;
 }
-bool L1MuEff_ChargeAssignment_ntupleCreator::glmucuts(int imu) {
+bool GMTChargeAssignmentNtupleizer::glmucuts(int imu) {
   return (recoMuon_->type[imu] == 0);
 }
 
-int L1MuEff_ChargeAssignment_ntupleCreator::candqual(int iL1Mu, int iL1Sys) {
+int GMTChargeAssignmentNtupleizer::candqual(int iL1Mu, int iL1Sys) {
   int q = -99;
   if (iL1Sys == DT) q = gmt_->Qualdt[iL1Mu];
   if (iL1Sys == RPCb) q = gmt_->Qualrpcb[iL1Mu];
@@ -385,7 +385,7 @@ int L1MuEff_ChargeAssignment_ntupleCreator::candqual(int iL1Mu, int iL1Sys) {
   if (iL1Sys == RECOPASS) q = 7;
   return q;
 }
-double L1MuEff_ChargeAssignment_ntupleCreator::candphi(int iRecoMu,
+double GMTChargeAssignmentNtupleizer::candphi(int iRecoMu,
                                                        int iL1Sys) {
   double p = -9999;
   if (iL1Sys == DT || iL1Sys == RPCb) p = recoMuon_->sa_phi_mb2[iRecoMu];
@@ -401,7 +401,7 @@ double L1MuEff_ChargeAssignment_ntupleCreator::candphi(int iRecoMu,
   }
   return p;
 }
-double L1MuEff_ChargeAssignment_ntupleCreator::dphi(int iRecoMu, int iL1Mu,
+double GMTChargeAssignmentNtupleizer::dphi(int iRecoMu, int iL1Mu,
                                                     int iL1Sys) {
   if (recoMuon_->type[iRecoMu] != 0) return -9999;  // not a global
   Double_t trigphi = -99999;
@@ -439,7 +439,7 @@ double L1MuEff_ChargeAssignment_ntupleCreator::dphi(int iRecoMu, int iL1Mu,
   return newphisep;
 }
 
-double L1MuEff_ChargeAssignment_ntupleCreator::deta(int iRecoMu, int iL1Mu,
+double GMTChargeAssignmentNtupleizer::deta(int iRecoMu, int iL1Mu,
                                                     int iL1Sys) {
   if (recoMuon_->type[iRecoMu] != 0) return -9999;  // not a global
   Double_t trigeta = -99999;
@@ -453,7 +453,7 @@ double L1MuEff_ChargeAssignment_ntupleCreator::deta(int iRecoMu, int iL1Mu,
   if (newetasep > 1000) return -999;
   return newetasep;
 }
-double L1MuEff_ChargeAssignment_ntupleCreator::dpt(
+double GMTChargeAssignmentNtupleizer::dpt(
     int iRecoMu, int iL1Mu,
     int iL1Sys) {  // the tracker pt is used
   Double_t trigpt = -99999;
@@ -468,7 +468,7 @@ double L1MuEff_ChargeAssignment_ntupleCreator::dpt(
   return newptsep;
 }
 
-double L1MuEff_ChargeAssignment_ntupleCreator::bestL1match(
+double GMTChargeAssignmentNtupleizer::bestL1match(
     int iRecoMu, int& iL1Mu, int iL1Sys, float ptcut, int exclMu) {
   Double_t bestdeltar = 9999;
   int cand = 9999;
@@ -537,7 +537,7 @@ double L1MuEff_ChargeAssignment_ntupleCreator::bestL1match(
   return bestdeltar;
 }
 
-double L1MuEff_ChargeAssignment_ntupleCreator::dRreco(int iRecoMu1,
+double GMTChargeAssignmentNtupleizer::dRreco(int iRecoMu1,
                                                       int iRecoMu2) {
   double dR = -9999;
   if (recoMuon_->type[iRecoMu1] != 0) return -9999;  // not a global
@@ -553,7 +553,7 @@ double L1MuEff_ChargeAssignment_ntupleCreator::dRreco(int iRecoMu1,
   return dR;
 }
 
-muSysEnum L1MuEff_ChargeAssignment_ntupleCreator::whichSubsystem(int mu) {
+muSysEnum GMTChargeAssignmentNtupleizer::whichSubsystem(int mu) {
   muSysEnum muSys;
   if (gmt_->IdxDTBX[mu] != -1 && gmt_->IdxRPCb[mu] != -1) {
     muSys = eDTRPC;
@@ -597,7 +597,7 @@ muSysEnum L1MuEff_ChargeAssignment_ntupleCreator::whichSubsystem(int mu) {
   return muSys;
 }
 
-std::pair<bool, bool> L1MuEff_ChargeAssignment_ntupleCreator::matchDiMuons(
+std::pair<bool, bool> GMTChargeAssignmentNtupleizer::matchDiMuons(
     int iRecoMu1, int iRecoMu2, int& L1Mu1, int& L1Mu2, int iL1Sys, float ptcut,
     float dRmax) {
   int cand11, cand12, cand21, cand22;
@@ -625,7 +625,7 @@ std::pair<bool, bool> L1MuEff_ChargeAssignment_ntupleCreator::matchDiMuons(
   return std::pair<bool, bool>(dR1 < dRmax, dR2 < dRmax);
 }
 
-void L1MuEff_ChargeAssignment_ntupleCreator::toggleBranches() {
+void GMTChargeAssignmentNtupleizer::toggleBranches() {
   // Select only needed branches:
   fChain->SetBranchStatus("*", 0);
 
