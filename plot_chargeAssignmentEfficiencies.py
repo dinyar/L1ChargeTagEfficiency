@@ -4,6 +4,7 @@ from ROOT import *
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), "../L1AnalysisHelpers"))
 from CreateHistograms import *
+from dataset_name import *
 
 gROOT.Reset()
 gROOT.SetBatch(kTRUE);
@@ -11,6 +12,7 @@ gROOT.SetBatch(kTRUE);
 efficiencyList = []
 # TODO: Axis labels
 # Entries: Label for histogram (Will be used for filename and title) | binning | parameters used for project functions
+efficiencyList.append(["deltaR_reco", 100, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["diMu-gmtPt5"], cutDict["diMu-recoPt5"]])
 efficiencyList.append(["deltaR_reco", 100, 0, 2, "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["diMu-gmtPt5_cs"], cutDict["diMu-recoPt5"]])
 efficiencyList.append(["mu1_recoPt", 50, 0, 50, "pT1_reco", cutDict["diMu-gmtPt1_cs"], cutDict["diMu-recoPt1"]])
 efficiencyList.append(["mu2_recoPt", 50, 0, 50, "pT2_reco", cutDict["diMu-gmtPt1_cs"], cutDict["diMu-recoPt1"]])
@@ -70,7 +72,6 @@ f = TFile.Open("DiMuNtuple.root")
 
 ntuple = f.Get("ntuple")
 
-dataset = "2012D-Muonia"
 for varList in efficiencyList:
     generateEfficiencyHist(varList, dataset)
 
