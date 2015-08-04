@@ -1,5 +1,6 @@
 GMTChargeAssignmentNtupleizer_C.d
 DiMuNtuple.root
+DiMuNtupleMC.root
 ntuple_list
 plots/
 dataset_name.py*
