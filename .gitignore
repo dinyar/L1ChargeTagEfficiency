@@ -3,3 +3,7 @@ DiMuNtuple.root
 ntuple_list
 plots/
 dataset_name.py*
+*.png
+*.pdf
+*.pyc
+
