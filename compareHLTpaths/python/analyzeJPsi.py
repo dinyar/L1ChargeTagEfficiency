@@ -14,19 +14,16 @@ def makeHistogram (title, binning, quantity):
     histo.SetMinimum(0)
     if quantity == "mass":
         histo.GetXaxis().SetTitle("J/Psi mass [GeV/c]")
-        histo.GetXaxis().SetLabelOffset(0.0100000000000000001)
-        histo.GetXaxis().SetTitleOffset(1.2)
-        histo.GetYaxis().SetLabelOffset(0.0100000000000000001)
+        histo.GetXaxis().SetLabelOffset(0.0100000000000000002)
+        histo.GetYaxis().SetLabelOffset(0.0100000000000000002)
         histo.GetYaxis().SetTitleOffset(1.4)
     elif quantity == "eta":
         histo.GetXaxis().SetTitle("#mbox{#eta}")
-        histo.GetXaxis().SetTitleOffset(1.2)
         histo.GetYaxis().SetTitleOffset(1.3)
     elif quantity == "phi":
         histo.GetXaxis().SetTitle("#mbox{#phi}")
     elif quantity == "pt":
         histo.GetXaxis().SetTitle("#mbox{p}_{#mbox{T}} #mbox{[GeV/c]}")
-        histo.GetXaxis().SetTitleOffset(1.2)
         histo.GetYaxis().SetTitleOffset(1.3)
     else:
         histo.GetXaxis().SetTitle("")
@@ -71,10 +68,10 @@ def plotJPsi (events, label, handle, plottingVariables):
                 # TODO: Not sure if that's a good idea actually..
                 if outer4v.Pt() > inner4v.Pt():
                     leadingMuon = inner4v
-                    secondLeadingMuon = outer4v
+                    trailingMuon = outer4v
                 else:
                     leadingMuon = outer4v
-                    secondLeadingMuon = inner4v
+                    trailingMuon = inner4v
 
                 for plottingVar, hist in izip(plottingVariables, particleHistorgrams):
                     if len(plottingVar.ptCut) > 0:
@@ -82,14 +79,17 @@ def plotJPsi (events, label, handle, plottingVariables):
                         if (jpsi.Pt() > plottingVar.ptCut[1]): continue
 
                     # Select only J/Psi candidates with the correct mass
-                    if (jpsi.M() < plottingVar.massCut[0]) or (jpsi.M() > plottingVar.massCut[1]): continue
+                    if plottingVar.massCut[0] < plottingVar.massCut[1]:
+                        if (jpsi.M() < plottingVar.massCut[0]) or (jpsi.M() > plottingVar.massCut[1]): continue
+                    else:
+                        if (jpsi.M() <= plottingVar.massCut[0]) and (jpsi.M() >= plottingVar.massCut[1]): continue
 
                     if plottingVar.particleSelector == 0:
                         plotParticle = jpsi
                     elif plottingVar.particleSelector == 1:
                         plotParticle = leadingMuon
                     elif plottingVar.particleSelector == 2:
-                        plotParticle = secondLeadingMuon
+                        plotParticle = trailingMuon
 
                     if plottingVar.quantity == "mass":
                         hist.Fill( plotParticle.M() )
@@ -129,18 +129,27 @@ def makeJPsiPlots(label, handle, plottingVariables):
         jpsiHist_noOS.DrawCopy("E1HIST")
         jpsiHist_OSrequired.SetLineColor(ROOT.kBlue)
         jpsiHist_OSrequired.DrawCopy("E1HISTSAME")
-        legend = ROOT.TLegend(0.25,0.2,0.3,0.3)
+        legend = ROOT.TLegend(plottingVar.legendPositions[0][0],
+                                plottingVar.legendPositions[0][1],
+                                plottingVar.legendPositions[0][2],
+                                plottingVar.legendPositions[0][3])
         legend.SetTextSize(0.0275)
         if (len(plottingVar.ptCut) > 0):
             # legend.SetFillStyle(0)
-            legend.AddEntry(jpsiHist_noOS, "HLT_Dimuon0er16_Jpsi_NoOS_NoVertexing_v1; " + plottingVar.ptCut[2], "LEP")
-            legend.AddEntry(jpsiHist_OSrequired, "HLT_Dimuon0er16_Jpsi_NoVertexing_v1; " + plottingVar.ptCut[2], "LEP")
+            legend.AddEntry(jpsiHist_noOS,
+                            "#splitline{HLT_Dimuon0er16_Jpsi_NoOS_NoVertexing_v1;}{" +
+                            plottingVar.ptCut[2] + "}", "LEP")
+            legend.AddEntry(jpsiHist_OSrequired,
+                            "#splitline{HLT_Dimuon0er16_Jpsi_NoVertexing_v1;}{" +
+                            plottingVar.ptCut[2] + "}", "LEP")
         else:
             # legend = ROOT.TLegend(0.47,0.87,0.99,0.99)
             # legend.SetFillStyle(0)
             # legend.SetTextSize(0.0275)
-            legend.AddEntry(jpsiHist_noOS, "HLT_Dimuon0er16_Jpsi_NoOS_NoVertexing_v1", "LEP")
-            legend.AddEntry(jpsiHist_OSrequired, "HLT_Dimuon0er16_Jpsi_NoVertexing_v1", "LEP")
+            legend.AddEntry(jpsiHist_noOS,
+                            "HLT_Dimuon0er16_Jpsi_NoOS_NoVertexing_v1", "LEP")
+            legend.AddEntry(jpsiHist_OSrequired,
+                            "HLT_Dimuon0er16_Jpsi_NoVertexing_v1", "LEP")
         legend.Draw("SAME")
         c1.Print (plottingVar.title + ".png")
         c1.Print (plottingVar.title + ".pdf")
@@ -149,24 +158,29 @@ def makeJPsiPlots(label, handle, plottingVariables):
         # Plot efficiencies
         c2 = ROOT.TCanvas("", "", 1024, 786)
         # legend_ratio = ROOT.TLegend(0.78,0.91,0.99,0.99)
-        legend_ratio = ROOT.TLegend(0.25,0.2,0.3,0.25)
+        legend_ratio = ROOT.TLegend(plottingVar.legendPositions[1][0],
+                                    plottingVar.legendPositions[1][1],
+                                    plottingVar.legendPositions[1][2],
+                                    plottingVar.legendPositions[1][3])
         legend_ratio.SetTextSize(0.0275)
         # legend_ratio.SetFillStyle(0)
-        jpsiHist_ratio = ROOT.TH1F ("jpsiratio", "", plottingVar.binning[0], plottingVar.binning[1], plottingVar.binning[2])
+        jpsiHist_ratio = ROOT.TH1F ("jpsiratio", "", plottingVar.binning[0],
+                                    plottingVar.binning[1],
+                                    plottingVar.binning[2])
         jpsiHist_ratio.Sumw2()
         jpsiHist_ratio.SetLineColor(ROOT.kBlue);
         jpsiHist_ratio.Divide(jpsiHist_OSrequired, jpsiHist_noOS, 1.0, 1.0)
         jpsiHist_ratio.SetMinimum(0)
         if plottingVar.quantity == "mass":
             jpsiHist_ratio.GetXaxis().SetTitle("J/Psi mass [GeV/c]")
-            jpsiHist_ratio.GetXaxis().SetTitleOffset(1.2)
+            jpsiHist_ratio.GetXaxis().SetLabelOffset(0.0100000000000000002)
+            jpsiHist_ratio.GetYaxis().SetLabelOffset(0.0100000000000000002)
         elif plottingVar.quantity == "eta":
             jpsiHist_ratio.GetXaxis().SetTitle("#mbox{#eta}")
         elif plottingVar.quantity == "phi":
             jpsiHist_ratio.GetXaxis().SetTitle("#mbox{#phi}")
         elif plottingVar.quantity == "pt":
             jpsiHist_ratio.GetXaxis().SetTitle("#mbox{p}_{#mbox{T}} #mbox{[GeV/c]}")
-            jpsiHist_ratio.GetXaxis().SetTitleOffset(1.2)
         else:
             jpsiHist_ratio.GetXaxis().SetTitle("")
         jpsiHist_ratio.GetYaxis().SetTitle("OS required/no OS")
@@ -191,8 +205,8 @@ def makeJPsiPlots(label, handle, plottingVariables):
         # print "Alternative error (from hist): " +str(jpsiHist_ratio.GetBinError(1))
 
 
-f_noOS = ROOT.TFile.Open("../../charmonium_HLT_noOS.root")
-f_OSrequired = ROOT.TFile.Open("../../charmonium_HLT_OSrequired.root")
+f_noOS = ROOT.TFile.Open("../../../charmonium_HLT_noOS.root")
+f_OSrequired = ROOT.TFile.Open("../../../charmonium_HLT_OSrequired.root")
 events_noOS = Events (f_noOS)
 events_OSrequired = Events (f_OSrequired)
 
@@ -205,9 +219,10 @@ label = ("selectedPatMuons")
 
 # Structure to hold plotting data
 # particleSelector: 0 = DiMuon; 1 = Leading muon; 2 = Second leading muon
-PlottingVariables = namedtuple("PlottingVariables", ["quantity", "binning", "title", "ptCut", "massCut", "particleSelector"])
+PlottingVariables = namedtuple("PlottingVariables", ["quantity", "binning", "title", "ptCut", "massCut", "particleSelector", "legendPositions"])
 
 # Binning lists
+binning_background = [50, 0, 10]
 binning_mass = [25, 2.9, 3.4]
 binning_eta = [16, -1.6, 1.6]
 binning_pT = [35, 0, 35]
@@ -218,33 +233,58 @@ binning_mu_pT = [20, 0, 20]
 
 
 # Cuts
-pT_3to15 = [3, 15, "#mbox{p}_{#mbox{T}}#mbox{(J/Psi) in [3, 15] GeV/c}"]
+background_outside3to3_2 = [3.2, 3, ""]
 mass_3to3_2 = [3, 3.2, ""]
+pT_3to15 = [3, 15, "#mbox{p}_{#mbox{T}}#mbox{(J/Psi) in [3, 15] GeV/c}"]
 
 
 # Particle selector
 diMu = 0
 leadingMu = 1
-secondLeadingMu = 2
+trailingMu = 2
 
+# Legend position (left edge) possibilities
+upperRight = [0.5,0.75,0.65,0.9]
+upperLeft = [0.2,0.75,0.25,0.9]
+lowerRight = [0.5,0.2,0.65,0.35]
+lowerLeft = [0.2,0.2,0.35,0.35]
+topCenter = [0.4,0.75,0.45,0.9]
+bottomCenter = [0.4,0.3,0.45,0.35]
+upperRight_narrow = [0.5,0.8,0.65,0.9]
+upperLeft_narrow = [0.2,0.8,0.25,0.9]
+lowerRight_narrow = [0.5,0.2,0.65,0.3]
+lowerLeft_narrow = [0.2,0.2,0.25,0.3]
+topCenter_narrow = [0.4,0.8,0.45,0.9]
+bottomCenter_narrow = [0.4,0.3,0.45,0.3]
+
+defaultLegendPositions = [upperRight, upperRight]
 
 # Construct plotting variables
-plotMass = PlottingVariables(quantity="mass", binning=binning_mass, title="jpsiMass", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu)
-plotMass_pTrestricted = PlottingVariables(quantity="mass", binning=binning_mass, title="jpsiMass_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=diMu)
-plotPt = PlottingVariables(quantity="pt", binning=binning_pT, title="jpsiVsPt", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu)
-plotPt_pTrestricted = PlottingVariables(quantity="pt", binning=binning_pT_restricted, title="jpsiVsPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=diMu)
-plotEta = PlottingVariables(quantity="eta", binning=binning_eta, title="jpsiVsEta", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu)
-plotEta_pTrestricted = PlottingVariables(quantity="eta", binning=binning_eta, title="jpsiVsEta_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=diMu)
+plotBackground = PlottingVariables(quantity="mass", binning=binning_background, title="background", ptCut=[], massCut=background_outside3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
+plotMass = PlottingVariables(quantity="mass", binning=binning_mass, title="jpsiMass", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
+plotMass_pTrestricted = PlottingVariables(quantity="mass", binning=binning_mass, title="jpsiMass_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
+plotPt = PlottingVariables(quantity="pt", binning=binning_pT, title="jpsiVsPt", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
+plotPt_pTrestricted = PlottingVariables(quantity="pt", binning=binning_pT_restricted, title="jpsiVsPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[bottomCenter, upperRight_narrow])
+plotEta = PlottingVariables(quantity="eta", binning=binning_eta, title="jpsiVsEta", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[lowerLeft, lowerLeft_narrow])
+plotEta_pTrestricted = PlottingVariables(quantity="eta", binning=binning_eta, title="jpsiVsEta_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[lowerLeft, lowerLeft_narrow])
 
-plotMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT, title="leadingMuVsPt", ptCut=[], massCut=mass_3to3_2, particleSelector=leadingMu)
-plotMuPt_pTrestricted = PlottingVariables(quantity="pt", binning=binning_mu_pT, title="leadingMuVsPt-restr_jpsiPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=leadingMu)
-plotMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta, title="leadingMuVsEta", ptCut=[], massCut=mass_3to3_2, particleSelector=leadingMu)
-plotMuEta_pTrestricted = PlottingVariables(quantity="eta", binning=binning_mu_eta, title="leadingMuVsEta-restr_jpsiPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=leadingMu)
+plotLeadingMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT, title="leadingMuVsPt", ptCut=[], massCut=mass_3to3_2, particleSelector=leadingMu, legendPositions=[upperRight, upperLeft_narrow])
+plotLeadingMuPt_pTrestricted = PlottingVariables(quantity="pt", binning=binning_mu_pT, title="leadingMuVsPt-restr_jpsiPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=leadingMu, legendPositions=[upperRight, lowerRight_narrow])
+plotLeadingMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta, title="leadingMuVsEta", ptCut=[], massCut=mass_3to3_2, particleSelector=leadingMu, legendPositions=[lowerLeft, lowerLeft_narrow])
+plotLeadingMuEta_pTrestricted = PlottingVariables(quantity="eta", binning=binning_mu_eta, title="leadingMuVsEta-restr_jpsiPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=leadingMu, legendPositions=[lowerLeft, lowerLeft_narrow])
 
+plotTrailingMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT, title="trailingMuVsPt", ptCut=[], massCut=mass_3to3_2, particleSelector=trailingMu, legendPositions=[upperRight, upperLeft_narrow])
+plotTrailingMuPt_pTrestricted = PlottingVariables(quantity="pt", binning=binning_mu_pT, title="trailingMuVsPt-restr_jpsiPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=trailingMu, legendPositions=[upperRight, lowerRight_narrow])
+plotTrailingMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta, title="trailingMuVsEta", ptCut=[], massCut=mass_3to3_2, particleSelector=trailingMu, legendPositions=[lowerLeft, lowerLeft_narrow])
+plotTrailingMuEta_pTrestricted = PlottingVariables(quantity="eta", binning=binning_mu_eta, title="trailingMuVsEta-restr_jpsiPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=trailingMu, legendPositions=[lowerLeft, lowerLeft_narrow])
 
 # Construct plotting lists
-jpsiPlotVars = [plotMass, plotMass_pTrestricted, plotPt, plotPt_pTrestricted,
-                plotEta, plotEta_pTrestricted, plotMuPt, plotMuPt_pTrestricted,
-                plotMuEta, plotMuEta_pTrestricted]
+jpsiPlotVars = [plotBackground,
+                plotMass, plotMass_pTrestricted, plotPt, plotPt_pTrestricted,
+                plotEta, plotEta_pTrestricted,
+                plotLeadingMuPt, plotLeadingMuPt_pTrestricted,
+                plotLeadingMuEta, plotLeadingMuEta_pTrestricted,
+                plotTrailingMuPt, plotTrailingMuPt_pTrestricted,
+                plotTrailingMuEta, plotTrailingMuEta_pTrestricted]
 
 makeJPsiPlots(label, handle, jpsiPlotVars)
