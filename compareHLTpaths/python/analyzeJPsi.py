@@ -222,7 +222,7 @@ label = ("selectedPatMuons")
 PlottingVariables = namedtuple("PlottingVariables", ["quantity", "binning", "title", "ptCut", "massCut", "particleSelector", "legendPositions"])
 
 # Binning lists
-binning_background = [50, 0, 10]
+binning_background = [10, 0, 10]
 binning_mass = [25, 2.9, 3.4]
 binning_eta = [16, -1.6, 1.6]
 binning_pT = [35, 0, 35]
@@ -234,6 +234,7 @@ binning_mu_pT = [20, 0, 20]
 
 # Cuts
 background_outside3to3_2 = [3.2, 3, ""]
+background_outside2_8to3_4 = [3.4, 2.8, ""]
 mass_3to3_2 = [3, 3.2, ""]
 pT_3to15 = [3, 15, "#mbox{p}_{#mbox{T}}#mbox{(J/Psi) in [3, 15] GeV/c}"]
 
@@ -260,7 +261,8 @@ bottomCenter_narrow = [0.4,0.3,0.45,0.3]
 defaultLegendPositions = [upperRight, upperRight]
 
 # Construct plotting variables
-plotBackground = PlottingVariables(quantity="mass", binning=binning_background, title="background", ptCut=[], massCut=background_outside3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
+plotBackground_ex3to3_2 = PlottingVariables(quantity="mass", binning=binning_background, title="background_ex3to3_2", ptCut=[], massCut=background_outside3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
+plotBackground_ex2_8to3_4 = PlottingVariables(quantity="mass", binning=binning_background, title="background_ex2_8to3_4", ptCut=[], massCut=background_outside2_8to3_4, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
 plotMass = PlottingVariables(quantity="mass", binning=binning_mass, title="jpsiMass", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
 plotMass_pTrestricted = PlottingVariables(quantity="mass", binning=binning_mass, title="jpsiMass_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
 plotPt = PlottingVariables(quantity="pt", binning=binning_pT, title="jpsiVsPt", ptCut=[], massCut=mass_3to3_2, particleSelector=diMu, legendPositions=[upperRight, upperLeft_narrow])
@@ -279,7 +281,7 @@ plotTrailingMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta, ti
 plotTrailingMuEta_pTrestricted = PlottingVariables(quantity="eta", binning=binning_mu_eta, title="trailingMuVsEta-restr_jpsiPt_3-15GeV", ptCut=pT_3to15, massCut=mass_3to3_2, particleSelector=trailingMu, legendPositions=[lowerLeft, lowerLeft_narrow])
 
 # Construct plotting lists
-jpsiPlotVars = [plotBackground,
+jpsiPlotVars = [plotBackground_ex3to3_2, plotBackground_ex2_8to3_4,
                 plotMass, plotMass_pTrestricted, plotPt, plotPt_pTrestricted,
                 plotEta, plotEta_pTrestricted,
                 plotLeadingMuPt, plotLeadingMuPt_pTrestricted,
