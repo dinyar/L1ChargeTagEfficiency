@@ -170,12 +170,6 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
          particle != particleList.end(); ++particle) {
       std::string quantityName = *name + *particle;
       ntupleContStream << ":" << quantityName;
-      //   ntupleContStream << ":" << *name << "1_reco:" << *name << "1_GMT";
-      //   ntupleContStream << ":" << *name << "2_reco:" << *name << "2_GMT";
-      //   contDict.push_back(*name + "1_reco");
-      //   contDict.push_back(*name + "1_GMT");
-      //   contDict.push_back(*name + "2_reco");
-      //   contDict.push_back(*name + "2_GMT");
     }
   }
   std::string fname("DiMuNtuple.root");
@@ -261,7 +255,7 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
   TLorentzVector muVec2;
   muVec2.SetPtEtaPhiM(recoMuon_->pt[recoMu2], recoMuon_->eta[recoMu2],
                       recoMuon_->phi[recoMu2], 0.1);  // Muon mass is ~0.1 GeV
-  TLorentzVevtor diMuon_reco = muVec1 + muVec2;
+  TLorentzVector diMuon_reco = muVec1 + muVec2;
   for (size_t varIt = 0; varIt < contDict.size(); ++varIt) {
     if (contDict[varIt] == "dR_reco") {
       ntupleValues[varIt] = dRreco(recoMu1, recoMu2);
