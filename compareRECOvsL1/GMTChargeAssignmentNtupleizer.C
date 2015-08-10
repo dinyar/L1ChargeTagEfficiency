@@ -46,8 +46,7 @@ Int_t twodhisto_nbins = 36;
 class GMTChargeAssignmentNtupleizer : public L1Ntuple {
  public:
   // constructor
-  GMTChargeAssignmentNtupleizer(std::string filename)
-      : L1Ntuple(filename) {}
+  GMTChargeAssignmentNtupleizer(std::string filename) : L1Ntuple(filename) {}
   GMTChargeAssignmentNtupleizer() : L1Ntuple() {}
   ~GMTChargeAssignmentNtupleizer() {}
 
@@ -77,12 +76,12 @@ class GMTChargeAssignmentNtupleizer : public L1Ntuple {
   double bestL1match(int iRecoMu, int& iL1Muint, int iL1Sys, float ptcut,
                      int exclMu);  // finds best match between iRecoMu muon and
                                    // trig cands of type iL1Sys
-  std::pair<bool, bool> matchDiMuons(int iRecoMu1, int iRecoMu2, int& L1Mu1, int& L1Mu2,
-                    int iL1Sys, float ptcut,
-                    float dRmax);  // finds the best two
-                                   // matches (lowest
-                                   // dR=dR1+dR2) for
-                                   // the two iRecoMus.
+  std::pair<bool, bool> matchDiMuons(int iRecoMu1, int iRecoMu2, int& L1Mu1,
+                                     int& L1Mu2, int iL1Sys, float ptcut,
+                                     float dRmax);  // finds the best two
+                                                    // matches (lowest
+                                                    // dR=dR1+dR2) for
+                                                    // the two iRecoMus.
   double dRreco(int iRecoMu1, int iRecoMu2);
   muSysEnum whichSubsystem(int mu);
 
@@ -139,29 +138,45 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
   // Create ntuple
   // TODO: Generate contStream from vec.
   // TODO: Make vec a vec of pairs?
-  std::vector<std::string> varList;
-  varList.push_back("N");
-  varList.push_back("Eta");
-  varList.push_back("Phi");
-  varList.push_back("pT");
-  varList.push_back("Ch");
-  varList.push_back("InvMass");
   std::ostringstream ntupleContStream;
   std::vector<std::string> contDict;
-  ntupleContStream << "Qual1_GMT:Qual2_GMT:SubsysID1_GMT:SubsysID2_GMT:dR_reco";
+  ntupleContStream << "N_reco:N_GMT:InvMass_dimuon_reco:InvMass_dimuon_GMT:"
+                   << "Qual1_GMT:Qual2_GMT:SubsysID1_GMT:SubsysID2_GMT:dR_reco";
+  contDict.push_back("N_reco");
+  contDict.push_back("N_GMT");
+  contDict.push_back("InvMass_dimuon_reco");
+  contDict.push_back("InvMass_dimuon_GMT");
   contDict.push_back("Qual1_GMT");
   contDict.push_back("Qual2_GMT");
   contDict.push_back("SubsysID1_GMT");
   contDict.push_back("SubsysID2_GMT");
   contDict.push_back("dR_reco");
-  for (std::vector<std::string>::iterator name = varList.begin(); name != varList.end(); ++name) {
-    ntupleContStream << ":" << *name << "1_reco:" << *name << "1_GMT";
-    contDict.push_back(*name + "1_reco");
-    // std::cout << name + "1_Reco" << std::endl;
-    contDict.push_back(*name + "1_GMT");
-    ntupleContStream << ":" << *name << "2_reco:" << *name << "2_GMT";
-    contDict.push_back(*name + "2_reco");
-    contDict.push_back(*name + "2_GMT");
+
+  std::vector<std::string> physicsQuantities;
+  physicsQuantities.push_back("Eta");
+  physicsQuantities.push_back("Phi");
+  physicsQuantities.push_back("pT");
+  physicsQuantities.push_back("Ch");
+  std::vector<std::string> particleList;
+  particleList.push_back("1_reco");
+  particleList.push_back("2_reco");
+  particleList.push_back("1_GMT");
+  particleList.push_back("2_GMT");
+  particleList.push_back("_dimuon_reco");
+  particleList.push_back("_dimuon_GMT");
+  for (std::vector<std::string>::iterator name = physicsQuantities.begin();
+       name != physicsQuantities.end(); ++name) {
+    for (std::vector<std::string>::iterator particle = particleList.begin();
+         particle != particleList.end(); ++particle) {
+      std::string quantityName = *name + *particle;
+      ntupleContStream << ":" << quantityName;
+      //   ntupleContStream << ":" << *name << "1_reco:" << *name << "1_GMT";
+      //   ntupleContStream << ":" << *name << "2_reco:" << *name << "2_GMT";
+      //   contDict.push_back(*name + "1_reco");
+      //   contDict.push_back(*name + "1_GMT");
+      //   contDict.push_back(*name + "2_reco");
+      //   contDict.push_back(*name + "2_GMT");
+    }
   }
   std::string fname("DiMuNtuple.root");
   TFile* out = new TFile(fname.c_str(), "RECREATE");
@@ -212,8 +227,8 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
         }
 
         // Find L1 candidates for both muons.
-        // TODO: Which pT cut??
         int cand1, cand2;
+        // #TODO:20 Move this function somewhere central?
         std::pair<bool, bool> diMuMatch =
             matchDiMuons(mu1, mu2, cand1, cand2, GMT, 0, 0.3);
 
@@ -234,10 +249,19 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
   out->Write();
 }
 
+// #Doing:0 Fill zeros (or some other empty marker) if diMuMatch is false!!
+// #Doing:10 Check why despite the above the study seemed ok..
 void GMTChargeAssignmentNtupleizer::fillNtuple(
     int recoMu1, int recoMu2, int gmtMu1, int gmtMu2,
     std::pair<bool, bool> diMuMatch, std::vector<std::string> contDict,
     Float_t ntupleValues[]) {
+  TLorentzVector muVec1;
+  muVec1.SetPtEtaPhiM(recoMuon_->pt[recoMu1], recoMuon_->eta[recoMu1],
+                      recoMuon_->phi[recoMu1], 0.1);  // Muon mass is ~0.1 GeV
+  TLorentzVector muVec2;
+  muVec2.SetPtEtaPhiM(recoMuon_->pt[recoMu2], recoMuon_->eta[recoMu2],
+                      recoMuon_->phi[recoMu2], 0.1);  // Muon mass is ~0.1 GeV
+  TLorentzVevtor diMuon_reco = muVec1 + muVec2;
   for (size_t varIt = 0; varIt < contDict.size(); ++varIt) {
     if (contDict[varIt] == "dR_reco") {
       ntupleValues[varIt] = dRreco(recoMu1, recoMu2);
@@ -269,64 +293,135 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
     if (contDict[varIt] == "Ch2_reco") {
       ntupleValues[varIt] = recoMuon_->ch[recoMu2];
     }
-    if (contDict[varIt] == "InvMass_reco") {
-      // Calc invariant mass of reco muons.
-      TLorentzVector muVec1;
-      muVec1.SetPtEtaPhiM(recoMuon_->pt[recoMu1], recoMuon_->eta[recoMu1],
-                          recoMuon_->phi[recoMu1], 0);
-      TLorentzVector muVec2;
-      muVec2.SetPtEtaPhiM(recoMuon_->pt[recoMu2], recoMuon_->eta[recoMu2],
-                          recoMuon_->phi[recoMu2], 0);
-      double invMass = (muVec1 + muVec2).Mag();
-      ntupleValues[varIt] = invMass;
+    if (contDict[varIt] == "pT_dimuon_reco") {
+      ntupleValues[varIt] = diMuon_reco.Pt();
+    }
+    if (contDict[varIt] == "Eta_dimuon_reco") {
+      ntupleValues[varIt] = diMuon_reco.Eta();
+    }
+    if (contDict[varIt] == "Phi_dimuon_reco") {
+      ntupleValues[varIt] = diMuon_reco.Phi();
+    }
+    if (contDict[varIt] == "InvMass_dimuon_reco") {
+      ntupleValues[varIt] = diMuon_reco.M();
     }
 
     if (contDict[varIt] == "N_GMT") {
       ntupleValues[varIt] = gmt_->N;
     }
-    if (contDict[varIt] == "pT1_GMT") {
-      ntupleValues[varIt] = gmt_->Pt[gmtMu1];
+    if (diMuMatch.first) {
+      if (contDict[varIt] == "pT1_GMT") {
+        ntupleValues[varIt] = gmt_->Pt[gmtMu1];
+      }
+      if (contDict[varIt] == "Eta1_GMT") {
+        ntupleValues[varIt] = gmt_->Eta[gmtMu1];
+      }
+      if (contDict[varIt] == "Phi1_GMT") {
+        ntupleValues[varIt] = gmt_->Phi[gmtMu1];
+      }
+      if (contDict[varIt] == "Ch1_GMT") {
+        ntupleValues[varIt] = gmt_->Cha[gmtMu1];
+      }
+      if (contDict[varIt] == "Qual1_GMT") {
+        ntupleValues[varIt] = gmt_->Qual[gmtMu1];
+      }
+      if (contDict[varIt] == "SubsysID1_GMT") {
+        ntupleValues[varIt] = whichSubsystem(gmtMu1);
+      }
+    } else {
+      if (contDict[varIt] == "pT1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Eta1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Phi1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Ch1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Qual1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "SubsysID1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
     }
-    if (contDict[varIt] == "Eta1_GMT") {
-      ntupleValues[varIt] = gmt_->Eta[gmtMu1];
+    if (diMuMatch.second) {
+      if (contDict[varIt] == "pT2_GMT") {
+        ntupleValues[varIt] = gmt_->Pt[gmtMu2];
+      }
+      if (contDict[varIt] == "Eta2_GMT") {
+        ntupleValues[varIt] = gmt_->Eta[gmtMu2];
+      }
+      if (contDict[varIt] == "Phi2_GMT") {
+        ntupleValues[varIt] = gmt_->Phi[gmtMu2];
+      }
+      if (contDict[varIt] == "Ch2_GMT") {
+        ntupleValues[varIt] = gmt_->Cha[gmtMu2];
+      }
+      if (contDict[varIt] == "Qual2_GMT") {
+        ntupleValues[varIt] = gmt_->Qual[gmtMu2];
+      }
+      if (contDict[varIt] == "SubsysID2_GMT") {
+        ntupleValues[varIt] = whichSubsystem(gmtMu2);
+      }
+    } else {
+      if (contDict[varIt] == "pT2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Eta2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Phi2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Ch2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Qual2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "SubsysID2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
     }
-    if (contDict[varIt] == "Phi1_GMT") {
-      ntupleValues[varIt] = gmt_->Phi[gmtMu1];
-    }
-    if (contDict[varIt] == "Ch1_GMT") {
-      ntupleValues[varIt] = gmt_->Cha[gmtMu1];
-    }
-    if (contDict[varIt] == "Qual1_GMT") {
-      ntupleValues[varIt] = gmt_->Qual[gmtMu1];
-    }
-    if (contDict[varIt] == "SubsysID1_GMT") {
-      ntupleValues[varIt] = whichSubsystem(gmtMu1);
-    }
-    if (contDict[varIt] == "pT2_GMT") {
-      ntupleValues[varIt] = gmt_->Pt[gmtMu2];
-    }
-    if (contDict[varIt] == "Eta2_GMT") {
-      ntupleValues[varIt] = gmt_->Eta[gmtMu2];
-    }
-    if (contDict[varIt] == "Phi2_GMT") {
-      ntupleValues[varIt] = gmt_->Phi[gmtMu2];
-    }
-    if (contDict[varIt] == "Ch2_GMT") {
-      ntupleValues[varIt] = gmt_->Cha[gmtMu2];
-    }
-    if (contDict[varIt] == "InvMass_reco") {
-      TLorentzVector muVec1;
-      muVec1.SetPtEtaPhiM(gmt_->Pt[gmtMu1], gmt_->Eta[gmtMu1], gmt_->Phi[gmtMu1], 0);
-      TLorentzVector muVec2;
-      muVec2.SetPtEtaPhiM(gmt_->Pt[gmtMu2], gmt_->Eta[gmtMu2], gmt_->Phi[gmtMu2], 0);
-      double invMass = (muVec1 + muVec2).Mag();
-      ntupleValues[varIt] = invMass;
-    }
-    if (contDict[varIt] == "Qual2_GMT") {
-      ntupleValues[varIt] = gmt_->Qual[gmtMu2];
-    }
-    if (contDict[varIt] == "SubsysID2_GMT") {
-      ntupleValues[varIt] = whichSubsystem(gmtMu2);
+
+    // #TODO:0 Fill the other di muon values here.
+    if (diMuMatch.first && diMuMatch.second) {
+      TLorentzVector muVec1_GMT;
+      muVec1_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu1], gmt_->Eta[gmtMu1],
+                              gmt_->Phi[gmtMu1], 0);
+      TLorentzVector muVec2_GMT;
+      muVec2_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu2], gmt_->Eta[gmtMu2],
+                              gmt_->Phi[gmtMu2], 0);
+      TLorentzVector diMuon_GMT = muVec1_GMT + muVec2_GMT;
+      if (contDict[varIt] == "pT_dimuon_GMT") {
+        ntupleValues[varIt] = diMuon_GMT.Pt();
+      }
+      if (contDict[varIt] == "Eta_dimuon_GMT") {
+        ntupleValues[varIt] = diMuon_GMT.Eta();
+      }
+      if (contDict[varIt] == "Phi_dimuon_GMT") {
+        ntupleValues[varIt] = diMuon_GMT.Phi();
+      }
+      if (contDict[varIt] == "InvMass_dimuon_GMT") {
+        ntupleValues[varIt] = diMuon_GMT.M();
+      }
+    } else {
+      if (contDict[varIt] == "pT_dimuon_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Eta_dimuon_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "Phi_dimuon_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contDict[varIt] == "InvMass_dimuon_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
     }
   }
 }
@@ -341,8 +436,8 @@ bool GMTChargeAssignmentNtupleizer::trigcuts() {
   return cond;
 }
 
-bool GMTChargeAssignmentNtupleizer::sysmucuts(int imu, int iSys,
-                                                       int what, float ptcut) {
+bool GMTChargeAssignmentNtupleizer::sysmucuts(int imu, int iSys, int what,
+                                              float ptcut) {
   bool condeta = false;
   if (iSys == DT || iSys == RPCb) condeta = (fabs(recoMuon_->eta[imu]) < 1.05);
   if (iSys == CSC)
@@ -385,8 +480,7 @@ int GMTChargeAssignmentNtupleizer::candqual(int iL1Mu, int iL1Sys) {
   if (iL1Sys == RECOPASS) q = 7;
   return q;
 }
-double GMTChargeAssignmentNtupleizer::candphi(int iRecoMu,
-                                                       int iL1Sys) {
+double GMTChargeAssignmentNtupleizer::candphi(int iRecoMu, int iL1Sys) {
   double p = -9999;
   if (iL1Sys == DT || iL1Sys == RPCb) p = recoMuon_->sa_phi_mb2[iRecoMu];
   if (iL1Sys == CSC || iL1Sys == RPCf) {
@@ -401,8 +495,7 @@ double GMTChargeAssignmentNtupleizer::candphi(int iRecoMu,
   }
   return p;
 }
-double GMTChargeAssignmentNtupleizer::dphi(int iRecoMu, int iL1Mu,
-                                                    int iL1Sys) {
+double GMTChargeAssignmentNtupleizer::dphi(int iRecoMu, int iL1Mu, int iL1Sys) {
   if (recoMuon_->type[iRecoMu] != 0) return -9999;  // not a global
   Double_t trigphi = -99999;
   if (iL1Sys == DT) trigphi = gmt_->Phidt[iL1Mu];
@@ -439,8 +532,7 @@ double GMTChargeAssignmentNtupleizer::dphi(int iRecoMu, int iL1Mu,
   return newphisep;
 }
 
-double GMTChargeAssignmentNtupleizer::deta(int iRecoMu, int iL1Mu,
-                                                    int iL1Sys) {
+double GMTChargeAssignmentNtupleizer::deta(int iRecoMu, int iL1Mu, int iL1Sys) {
   if (recoMuon_->type[iRecoMu] != 0) return -9999;  // not a global
   Double_t trigeta = -99999;
   if (iL1Sys == DT) trigeta = gmt_->Etadt[iL1Mu];
@@ -468,8 +560,9 @@ double GMTChargeAssignmentNtupleizer::dpt(
   return newptsep;
 }
 
-double GMTChargeAssignmentNtupleizer::bestL1match(
-    int iRecoMu, int& iL1Mu, int iL1Sys, float ptcut, int exclMu) {
+double GMTChargeAssignmentNtupleizer::bestL1match(int iRecoMu, int& iL1Mu,
+                                                  int iL1Sys, float ptcut,
+                                                  int exclMu) {
   Double_t bestdeltar = 9999;
   int cand = 9999;
   if (iL1Sys == DT) {
@@ -537,8 +630,7 @@ double GMTChargeAssignmentNtupleizer::bestL1match(
   return bestdeltar;
 }
 
-double GMTChargeAssignmentNtupleizer::dRreco(int iRecoMu1,
-                                                      int iRecoMu2) {
+double GMTChargeAssignmentNtupleizer::dRreco(int iRecoMu1, int iRecoMu2) {
   double dR = -9999;
   if (recoMuon_->type[iRecoMu1] != 0) return -9999;  // not a global
   if (recoMuon_->type[iRecoMu2] != 0) return -9999;  // not a global

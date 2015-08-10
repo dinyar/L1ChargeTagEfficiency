@@ -10,7 +10,7 @@ gROOT.Reset()
 gROOT.SetBatch(kTRUE);
 
 efficiencyList = []
-# TODO: Axis labels
+# #TODO:20 Axis labels
 # Entries: Label for histogram (Will be used for filename and title) | binning | parameters used for project functions
 efficiencyList.append(["deltaR_reco", binningDict["distWideFine"], "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["diMu-gmtPt5_cs"], cutDict["diMu-gmtPt5"]])
 efficiencyList.append(["mu1_recoPt", binningDict["pt25Fine"], "pT1_reco", cutDict["diMu-gmtPt1_cs"], cutDict["diMu-gmtPt1"]])
@@ -26,8 +26,8 @@ efficiencyList.append(["mu1_recoEta", binningDict["etaFine"], "Eta1_reco", cutDi
 efficiencyList.append(["mu2_recoEta", binningDict["etaFine"], "Eta2_reco", cutDict["diMu-gmtPt1_us"], cutDict["diMu-gmtPt1"]])
 efficiencyList.append(["mu1_recoPhi", binningDict["phiFine"], "Phi1_reco", cutDict["diMu-gmtPt1_us"], cutDict["diMu-gmtPt1"]])
 efficiencyList.append(["mu2_recoPhi", binningDict["phiFine"], "Phi2_reco", cutDict["diMu-gmtPt1_us"], cutDict["diMu-gmtPt1"]])
-# TODO: Add invariant calculation.
-# TODO: Add 2-D hist showing efficiency for pT of both muons.
+# #TODO:10 Add invariant calculation.
+# #TODO:0 Add 2-D hist showing efficiency for pT of both muons.
 
 stackList = []
 stackList.append(["mu1_recoPt", binningDict["pt25Fine"], "pT1_reco", cutDict["diMu-gmtPt1_cs"], cutDict["diMu-gmtPt1"], stackCutDict["subsystems_mu1"]])

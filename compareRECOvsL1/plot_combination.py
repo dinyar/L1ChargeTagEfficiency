@@ -11,7 +11,7 @@ gROOT.SetBatch(kTRUE);
 
 
 efficiencyList = []
-# TODO: Axis labels
+# #TODO:30 Axis labels
 # Entries: Label for histogram (Will be used for filename and title) | binning | parameters used for project functions
 efficiencyList.append(["deltaR_reco", binningDict["distWideFine"], "sqrt((Eta1_reco-Eta2_reco)**2+(Phi1_reco-Phi2_reco)**2)", cutDict["diMu-gmtPt5_cs"], cutDict["diMu-gmtPt5"]])
 efficiencyList.append(["mu1_recoPt", binningDict["pt25Fine"], "pT1_reco", cutDict["diMu-gmtPt1_cs"], cutDict["diMu-gmtPt1"]])
