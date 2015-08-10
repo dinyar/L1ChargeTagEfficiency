@@ -252,6 +252,8 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
     std::pair<bool, bool> diMuMatch, std::vector<std::string> contentList,
     Float_t ntupleValues[]) {
   TLorentzVector muVec1;
+  // #TODO:0 Check if pT is zero here or in GMT section.
+  // #TODO:5 Check why sometimes pT is 0 here.
   muVec1.SetPtEtaPhiM(recoMuon_->pt[recoMu1], recoMuon_->eta[recoMu1],
                       recoMuon_->phi[recoMu1], 0.1);  // Muon mass is ~0.1 GeV
   TLorentzVector muVec2;
@@ -305,7 +307,17 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
     if (contentList[varIt] == "N_GMT") {
       ntupleValues[varIt] = gmt_->N;
     }
-    if (diMuMatch.first) {
+
+    // #TODO:0 Fill the other di muon values here.
+    if (diMuMatch.first && diMuMatch.second) {
+      TLorentzVector muVec1_GMT;
+      muVec1_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu1], gmt_->Eta[gmtMu1],
+                              gmt_->Phi[gmtMu1], 0);
+      TLorentzVector muVec2_GMT;
+      muVec2_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu2], gmt_->Eta[gmtMu2],
+                              gmt_->Phi[gmtMu2], 0);
+      TLorentzVector diMuon_GMT = muVec1_GMT + muVec2_GMT;
+
       if (contentList[varIt] == "pT1_GMT") {
         ntupleValues[varIt] = gmt_->Pt[gmtMu1];
       }
@@ -324,27 +336,6 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
       if (contentList[varIt] == "SubsysID1_GMT") {
         ntupleValues[varIt] = whichSubsystem(gmtMu1);
       }
-    } else {
-      if (contentList[varIt] == "pT1_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Eta1_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Phi1_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Ch1_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Qual1_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "SubsysID1_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-    }
-    if (diMuMatch.second) {
       if (contentList[varIt] == "pT2_GMT") {
         ntupleValues[varIt] = gmt_->Pt[gmtMu2];
       }
@@ -363,36 +354,7 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
       if (contentList[varIt] == "SubsysID2_GMT") {
         ntupleValues[varIt] = whichSubsystem(gmtMu2);
       }
-    } else {
-      if (contentList[varIt] == "pT2_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Eta2_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Phi2_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Ch2_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "Qual2_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-      if (contentList[varIt] == "SubsysID2_GMT") {
-        ntupleValues[varIt] = -99999;
-      }
-    }
 
-    // #TODO:0 Fill the other di muon values here.
-    if (diMuMatch.first && diMuMatch.second) {
-      TLorentzVector muVec1_GMT;
-      muVec1_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu1], gmt_->Eta[gmtMu1],
-                              gmt_->Phi[gmtMu1], 0);
-      TLorentzVector muVec2_GMT;
-      muVec2_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu2], gmt_->Eta[gmtMu2],
-                              gmt_->Phi[gmtMu2], 0);
-      TLorentzVector diMuon_GMT = muVec1_GMT + muVec2_GMT;
       if (contentList[varIt] == "pT_dimuon_GMT") {
         ntupleValues[varIt] = diMuon_GMT.Pt();
       }
@@ -416,6 +378,42 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
         ntupleValues[varIt] = -99999;
       }
       if (contentList[varIt] == "InvMass_dimuon_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "pT1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Eta1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Phi1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Ch1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Qual1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "SubsysID1_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "pT2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Eta2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Phi2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Ch2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "Qual2_GMT") {
+        ntupleValues[varIt] = -99999;
+      }
+      if (contentList[varIt] == "SubsysID2_GMT") {
         ntupleValues[varIt] = -99999;
       }
     }
