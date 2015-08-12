@@ -67,7 +67,7 @@ rateList.append(["jPsi_InvMass", binningDict["invMassFine"], "InvMass_dimuon_rec
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon_reco", cutDict["jpsi-gmtPt1"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon_reco", cutDict["jpsi-gmtPt1_cs"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon_reco", cutDict["jpsi-gmtPt1_us"]])
-rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon_reco" cutDict["jpsi-gmtPt1"]])
+rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon_reco", cutDict["jpsi-gmtPt1"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon_reco", cutDict["jpsi-gmtPt1_cs"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon_reco", cutDict["jpsi-gmtPt1_us"]])
 

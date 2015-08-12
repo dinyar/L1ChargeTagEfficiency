@@ -260,6 +260,16 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
   muVec2.SetPtEtaPhiM(recoMuon_->pt[recoMu2], recoMuon_->eta[recoMu2],
                       recoMuon_->phi[recoMu2], 0.1);  // Muon mass is ~0.1 GeV
   TLorentzVector diMuon_reco = muVec1 + muVec2;
+  TLorentzVector muVec1_GMT;
+  TLorentzVector muVec2_GMT;
+  TLorentzVector diMuon_GMT;
+  if (diMuMatch.first && diMuMatch.second) {
+    muVec1_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu1], gmt_->Eta[gmtMu1],
+                            gmt_->Phi[gmtMu1], 0.1);
+    muVec2_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu2], gmt_->Eta[gmtMu2],
+                            gmt_->Phi[gmtMu2], 0.1);
+    diMuon_GMT = muVec1_GMT + muVec2_GMT;
+  }
   for (size_t varIt = 0; varIt < contentList.size(); ++varIt) {
     if (contentList[varIt] == "dR_reco") {
       ntupleValues[varIt] = dRreco(recoMu1, recoMu2);
@@ -310,14 +320,6 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
 
     // #TODO:0 Fill the other di muon values here.
     if (diMuMatch.first && diMuMatch.second) {
-      TLorentzVector muVec1_GMT;
-      muVec1_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu1], gmt_->Eta[gmtMu1],
-                              gmt_->Phi[gmtMu1], 0);
-      TLorentzVector muVec2_GMT;
-      muVec2_GMT.SetPtEtaPhiM(gmt_->Pt[gmtMu2], gmt_->Eta[gmtMu2],
-                              gmt_->Phi[gmtMu2], 0);
-      TLorentzVector diMuon_GMT = muVec1_GMT + muVec2_GMT;
-
       if (contentList[varIt] == "pT1_GMT") {
         ntupleValues[varIt] = gmt_->Pt[gmtMu1];
       }
