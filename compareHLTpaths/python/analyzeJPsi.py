@@ -134,86 +134,88 @@ def makeJPsiPlots(label, handle, plottingVariables):
                                     plottingVariables)
 
     # Modify all below. Put it in loop!
-    for jpsiHist_OSrequired, jpsiHist_noOS, plottingVar in izip(jpsiHists_OSrequired, jpsiHists_noOS, plottingVariables):
-        jpsiHist_OSrequired.Sumw2()
+    for jpsiHist_OSreq, jpsiHist_noOS, plotVar in izip(jpsiHists_OSrequired,
+                                                       jpsiHists_noOS,
+                                                       plottingVariables):
+        jpsiHist_OSreq.Sumw2()
         jpsiHist_noOS.Sumw2()
 
         # Draw histograms
         c1 = ROOT.TCanvas("", "", 1024, 786)
         jpsiHist_noOS.SetLineColor(ROOT.kRed)
         jpsiHist_noOS.DrawCopy("E1HIST")
-        jpsiHist_OSrequired.SetLineColor(ROOT.kBlue)
-        jpsiHist_OSrequired.DrawCopy("E1HISTSAME")
-        legend = ROOT.TLegend(plottingVar.legendPositions[0][0],
-                              plottingVar.legendPositions[0][1],
-                              plottingVar.legendPositions[0][2],
-                              plottingVar.legendPositions[0][3])
+        jpsiHist_OSreq.SetLineColor(ROOT.kBlue)
+        jpsiHist_OSreq.DrawCopy("E1HISTSAME")
+        legend = ROOT.TLegend(plotVar.legendPositions[0][0],
+                              plotVar.legendPositions[0][1],
+                              plotVar.legendPositions[0][2],
+                              plotVar.legendPositions[0][3])
         legend.SetTextSize(0.0275)
-        if (len(plottingVar.ptCut) > 0):
+        if (len(plotVar.ptCut) > 0):
             # legend.SetFillStyle(0)
             legend.AddEntry(jpsiHist_noOS,
                             "#splitline{\
                             HLT_Dimuon0er16_Jpsi_NoOS_NoVertexing_v1;}{" +
-                            plottingVar.ptCut[2] + "}", "LEP")
-            legend.AddEntry(jpsiHist_OSrequired,
+                            plotVar.ptCut[2] + "}", "LEP")
+            legend.AddEntry(jpsiHist_OSreq,
                             "#splitline{\
                             HLT_Dimuon0er16_Jpsi_NoVertexing_v1;}{" +
-                            plottingVar.ptCut[2] + "}", "LEP")
+                            plotVar.ptCut[2] + "}", "LEP")
         else:
             # legend = ROOT.TLegend(0.47,0.87,0.99,0.99)
             # legend.SetFillStyle(0)
             # legend.SetTextSize(0.0275)
             legend.AddEntry(jpsiHist_noOS,
                             "HLT_Dimuon0er16_Jpsi_NoOS_NoVertexing_v1", "LEP")
-            legend.AddEntry(jpsiHist_OSrequired,
+            legend.AddEntry(jpsiHist_OSreq,
                             "HLT_Dimuon0er16_Jpsi_NoVertexing_v1", "LEP")
         legend.Draw("SAME")
-        c1.Print(plottingVar.title + ".png")
-        c1.Print(plottingVar.title + ".pdf")
+        c1.Print(plotVar.title + ".png")
+        c1.Print(plotVar.title + ".pdf")
 
         # Plot efficiencies
         c2 = ROOT.TCanvas("", "", 1024, 786)
         # legend_ratio = ROOT.TLegend(0.78,0.91,0.99,0.99)
-        legend_ratio = ROOT.TLegend(plottingVar.legendPositions[1][0],
-                                    plottingVar.legendPositions[1][1],
-                                    plottingVar.legendPositions[1][2],
-                                    plottingVar.legendPositions[1][3])
+        legend_ratio = ROOT.TLegend(plotVar.legendPositions[1][0],
+                                    plotVar.legendPositions[1][1],
+                                    plotVar.legendPositions[1][2],
+                                    plotVar.legendPositions[1][3])
         legend_ratio.SetTextSize(0.0275)
         # legend_ratio.SetFillStyle(0)
-        jpsiHist_ratio = ROOT.TH1F("jpsiratio", "", plottingVar.binning[0],
-                                   plottingVar.binning[1],
-                                   plottingVar.binning[2])
+        jpsiHist_ratio = ROOT.TH1F("jpsiratio", "", plotVar.binning[0],
+                                   plotVar.binning[1],
+                                   plotVar.binning[2])
         jpsiHist_ratio.Sumw2()
         jpsiHist_ratio.SetLineColor(ROOT.kBlue)
-        jpsiHist_ratio.Divide(jpsiHist_OSrequired, jpsiHist_noOS, 1.0, 1.0)
+        jpsiHist_ratio.Divide(jpsiHist_OSreq, jpsiHist_noOS, 1.0, 1.0)
         jpsiHist_ratio.SetMinimum(0)
-        if plottingVar.quantity == "mass":
+        if plotVar.quantity == "mass":
             jpsiHist_ratio.GetXaxis().SetTitle("J/Psi mass [GeV/c]")
             jpsiHist_ratio.GetXaxis().SetLabelOffset(0.0100000000000000002)
             jpsiHist_ratio.GetYaxis().SetLabelOffset(0.0100000000000000002)
-        elif plottingVar.quantity == "eta":
+        elif plotVar.quantity == "eta":
             jpsiHist_ratio.GetXaxis().SetTitle("#mbox{#eta}")
-        elif plottingVar.quantity == "phi":
+        elif plotVar.quantity == "phi":
             jpsiHist_ratio.GetXaxis().SetTitle("#mbox{#phi}")
-        elif plottingVar.quantity == "pt":
+        elif plotVar.quantity == "pt":
             jpsiHist_ratio.GetXaxis().SetTitle("#mbox{p}_{#mbox{T}} \
             #mbox{[GeV/c]}")
         else:
             jpsiHist_ratio.GetXaxis().SetTitle("")
         jpsiHist_ratio.GetYaxis().SetTitle("OS required/no OS")
         jpsiHist_ratio.Draw("E1HIST")
-        if (len(plottingVar.ptCut) > 0):
-            legend_ratio.AddEntry(jpsiHist_ratio, plottingVar.ptCut[2], "LEP")
+        if (len(plotVar.ptCut) > 0):
+            legend_ratio.AddEntry(jpsiHist_ratio, plotVar.ptCut[2], "LEP")
             legend_ratio.Draw("SAME")
-        line = ROOT.TLine(plottingVar.binning[1], 1, plottingVar.binning[2], 1)
+        line = ROOT.TLine(plotVar.binning[1], 1, plotVar.binning[2], 1)
         line.SetLineColor(ROOT.kRed)
         line.Draw("SAME")
-        c2.Print(plottingVar.title + "_ratio.png")
-        c2.Print(plottingVar.title + "_ratio.pdf")
+        c2.Print(plotVar.title + "_ratio.png")
+        c2.Print(plotVar.title + "_ratio.pdf")
 
         # Compute overall efficiency
         nJPsi_noOS = jpsiHist_noOS.Integral()
-        nJPsi_OSrequired = jpsiHist_OSrequired.Integral()
+        nJPsi_OSrequired = jpsiHist_OSreq.Integral()
         print "J/Psi candidates with OS required: " + str(nJPsi_OSrequired)
         print "J/Psi candidates without OS required: " + str(nJPsi_noOS)
         totalEffError = nJPsi_OSrequired/nJPsi_noOS * \
