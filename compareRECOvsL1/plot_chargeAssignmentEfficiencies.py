@@ -48,23 +48,23 @@ efficiencyList.append(["mu1_recoPhi", binningDict["phiFine"], "Phi1_reco",
 efficiencyList.append(["mu2_recoPhi", binningDict["phiFine"], "Phi2_reco",
                        cutDict["diMu-gmtPt1_us"], cutDict["diMu-gmtPt1"]])
 efficiencyList.append(["jPsi_InvMass", binningDict["invMassFine"],
-                       "InvMass_dimuon", cutDict["jpsi-gmtPt1_cs"],
-                       cutDict["jpsi-gmtPt1"]])
+                       "InvMass_dimuon", cutDict["jpsi-Pt1_cs"],
+                       cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                       cutDict["jpsi-gmtPt1_cs"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_cs"], cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoPhi", binningDict["phiFine"], "Phi_dimuon",
-                       cutDict["jpsi-gmtPt1_cs"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_cs"], cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                       cutDict["jpsi-gmtPt1_cs"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_cs"], cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_InvMass", binningDict["invMassFine"],
-                       "InvMass_dimuon", cutDict["jpsi-gmtPt1_us"],
-                       cutDict["jpsi-gmtPt1"]])
+                       "InvMass_dimuon", cutDict["jpsi-Pt1_us"],
+                       cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                       cutDict["jpsi-gmtPt1_us"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_us"], cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoPhi", binningDict["phiFine"], "Phi_dimuon",
-                       cutDict["jpsi-gmtPt1_us"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_us"], cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                       cutDict["jpsi-gmtPt1_us"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_us"], cutDict["jpsi-Pt1"]])
 # #TODO:0 Add 2-D hist showing efficiency for pT of both muons.
 
 stackList = []
@@ -138,19 +138,19 @@ rateList.append(["mu2_recoPt", binningDict["pt25Fine"], "pT2_reco",
 rateList.append(["mu2_recoPt", binningDict["pt25Fine"], "pT2_reco",
                  cutDict["diMu-gmtPt1_us"]])
 rateList.append(["jPsi_InvMass", binningDict["invMassFine"], "InvMass_dimuon",
-                 cutDict["jpsi-gmtPt1"]])
+                 cutDict["jpsi-Pt1"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                 cutDict["jpsi-gmtPt1"]])
+                 cutDict["jpsi-Pt1"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                 cutDict["jpsi-gmtPt1_cs"]])
+                 cutDict["jpsi-Pt1_cs"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                 cutDict["jpsi-gmtPt1_us"]])
+                 cutDict["jpsi-Pt1_us"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                 cutDict["jpsi-gmtPt1"]])
+                 cutDict["jpsi-Pt1"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                 cutDict["jpsi-gmtPt1_cs"]])
+                 cutDict["jpsi-Pt1_cs"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                 cutDict["jpsi-gmtPt1_us"]])
+                 cutDict["jpsi-Pt1_us"]])
 
 # #TODO:10 Is the diMu cut correct? Probably only want to constrict the mu/jpsi
 eff2Dlist = []
@@ -166,10 +166,10 @@ eff2Dlist.append(["mu1_recoPtEta", binningDict["pt25Fine"],
 eff2Dlist.append(["mu2_recoPtEta", binningDict["pt25Fine"],
                   binningDict["etaFine"], "Eta2_reco:pT2_reco",
                   cutDict["diMu-gmtPt1_us"], cutDict["diMu-gmtPt1"]])
-eff2Dlist.append(["diMuon_PtEta", binningDict["pt25Fine"],
+eff2Dlist.append(["jPsi_PtEta", binningDict["pt25Fine"],
                   binningDict["etaFine"], "Eta_dimuon:pT_dimuon",
                   cutDict["jpsi-Pt1_cs"], cutDict["jpsi-Pt1"]])
-eff2Dlist.append(["diMuon_PtEta", binningDict["pt25Fine"],
+eff2Dlist.append(["jPsi_PtEta", binningDict["pt25Fine"],
                   binningDict["etaFine"], "Eta_dimuon:pT_dimuon",
                   cutDict["jpsi-Pt1_us"], cutDict["jpsi-Pt1"]])
 
@@ -180,9 +180,12 @@ rate2Dlist.append(["mu1_recoPtEta", binningDict["pt25Fine"],
 rate2Dlist.append(["mu2_recoPtEta", binningDict["pt25Fine"],
                    binningDict["etaFine"], "Eta2_reco:pT2_reco",
                    cutDict["diMu-gmtPt1_cs"]])
-rate2Dlist.append(["diMuon_PtEta", binningDict["pt25Fine"],
+rate2Dlist.append(["jPsi_PtEta", binningDict["pt25Fine"],
                    binningDict["etaFine"], "Eta_dimuon:pT_dimuon",
-                   cutDict["diMu-gmtPt1_cs"]])
+                   cutDict["jpsi-Pt1_cs"]])
+rate2Dlist.append(["jPsi_PtEta", binningDict["pt25Fine"],
+                   binningDict["etaFine"], "Eta_dimuon:pT_dimuon",
+                   cutDict["jpsi-Pt1_us"]])
 
 for varList in efficiencyList:
     generateEfficiencyHist(varList, "DiMuNtuple.root", dataset)
