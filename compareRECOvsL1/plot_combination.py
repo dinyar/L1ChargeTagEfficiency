@@ -144,14 +144,14 @@ efficiencyList.append(["mu2_recoEta_barrel", binningDict["etaFine"],
 
 # #TODO:0 Make jpsi plots for "central" region (dist and eff)
 efficiencyList.append(["jPsi_InvMass", binningDict["invMassFine"],
-                       "InvMass_dimuon", cutDict["jpsi-gmtPt1_us"],
-                       cutDict["jpsi-gmtPt1"]])
+                       "InvMass_dimuon", cutDict["jpsi-Pt1_us"],
+                       cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                       cutDict["jpsi-gmtPt1_us"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_us"], cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoPhi", binningDict["phiFine"], "Phi_dimuon",
-                       cutDict["jpsi-gmtPt1_us"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_us"], cutDict["jpsi-Pt1"]])
 efficiencyList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                       cutDict["jpsi-gmtPt1_us"], cutDict["jpsi-gmtPt1"]])
+                       cutDict["jpsi-Pt1_us"], cutDict["jpsi-Pt1"]])
 
 
 rateList = []
@@ -202,19 +202,19 @@ rateList.append(["mu2_recoPt_brl", binningDict["pt25Fine"], "pT2_reco",
                  cutDict["diMu-recoPt1-brl"]])
 
 rateList.append(["jPsi_InvMass", binningDict["invMassFine"], "InvMass_dimuon",
-                 cutDict["jpsi-gmtPt1"]])
+                 cutDict["jpsi-Pt1"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                 cutDict["jpsi-gmtPt1"]])
+                 cutDict["jpsi-Pt1"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                 cutDict["jpsi-gmtPt1_cs"]])
+                 cutDict["jpsi-Pt1_cs"]])
 rateList.append(["jPsi_recoEta", binningDict["etaFine"], "Eta_dimuon",
-                 cutDict["jpsi-gmtPt1_us"]])
+                 cutDict["jpsi-Pt1_us"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                 cutDict["jpsi-gmtPt1"]])
+                 cutDict["jpsi-Pt1"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                 cutDict["jpsi-gmtPt1_cs"]])
+                 cutDict["jpsi-Pt1_cs"]])
 rateList.append(["jPsi_recoPt", binningDict["pt25Fine"], "pT_dimuon",
-                 cutDict["jpsi-gmtPt1_us"]])
+                 cutDict["jpsi-Pt1_us"]])
 
 for varList in efficiencyList:
     generateCombinedEfficiencyHist(varList, "DiMuNtuple.root",
