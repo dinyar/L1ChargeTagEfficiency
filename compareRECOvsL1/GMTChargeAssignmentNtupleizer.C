@@ -140,12 +140,11 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
   // TODO: Make vec a vec of pairs?
   std::ostringstream ntupleContStream;
   std::vector<std::string> contentList;
-  ntupleContStream << "N_reco:N_GMT:InvMass_dimuon_reco:InvMass_dimuon_GMT:"
+  ntupleContStream << "N_reco:N_GMT:InvMass_dimuon:"
                    << "Qual1_GMT:Qual2_GMT:SubsysID1_GMT:SubsysID2_GMT:dR_reco";
   contentList.push_back("N_reco");
   contentList.push_back("N_GMT");
-  contentList.push_back("InvMass_dimuon_reco");
-  contentList.push_back("InvMass_dimuon_GMT");
+  contentList.push_back("InvMass_dimuon");
   contentList.push_back("Qual1_GMT");
   contentList.push_back("Qual2_GMT");
   contentList.push_back("SubsysID1_GMT");
