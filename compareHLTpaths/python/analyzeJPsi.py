@@ -98,20 +98,23 @@ def plotJPsi(events, label, handle, plottingVariables):
                             continue
 
                     if plottingVar.particleSelector == 0:
-                        plotParticle = jpsi
+                        plotParticles = [jpsi]
                     elif plottingVar.particleSelector == 1:
-                        plotParticle = leadingMuon
+                        plotParticles = [leadingMuon]
                     elif plottingVar.particleSelector == 2:
-                        plotParticle = trailingMuon
+                        plotParticles = [trailingMuon]
+                    elif plottingVar.particleSelector == 3:
+                        plotParticles = [leadingMuon, trailingMuon]
 
-                    if plottingVar.quantity == "mass":
-                        hist.Fill(plotParticle.M())
-                    elif plottingVar.quantity == "eta":
-                        hist.Fill(plotParticle.Eta())
-                    elif plottingVar.quantity == "phi":
-                        hist.Fill(plotParticle.Phi())
-                    elif plottingVar.quantity == "pt":
-                        hist.Fill(plotParticle.Pt())
+                    for plotParticle in plotParticles:
+                        if plottingVar.quantity == "mass":
+                            hist.Fill(plotParticle.M())
+                        elif plottingVar.quantity == "eta":
+                            hist.Fill(plotParticle.Eta())
+                        elif plottingVar.quantity == "phi":
+                            hist.Fill(plotParticle.Phi())
+                        elif plottingVar.quantity == "pt":
+                            hist.Fill(plotParticle.Pt())
 
     return particleHistorgrams
 
@@ -218,9 +221,9 @@ def makeJPsiPlots(label, handle, plottingVariables):
         nJPsi_OSrequired = jpsiHist_OSreq.Integral()
         print "J/Psi candidates with OS required: " + str(nJPsi_OSrequired)
         print "J/Psi candidates without OS required: " + str(nJPsi_noOS)
-        totalEffError = nJPsi_OSrequired/nJPsi_noOS * \
-            math.sqrt((1/nJPsi_noOS) + (1/nJPsi_OSrequired))
-        print "Efficiency: " + str(nJPsi_OSrequired/nJPsi_noOS) + \
+        totalEffError = nJPsi_OSrequired / nJPsi_noOS * \
+            math.sqrt((1 / nJPsi_noOS) + (1 / nJPsi_OSrequired))
+        print "Efficiency: " + str(nJPsi_OSrequired / nJPsi_noOS) + \
             "+/-" + str(totalEffError)
 
 
@@ -266,6 +269,7 @@ pT_3to15 = [3, 15, "#mbox{p}_{#mbox{T}}#mbox{(J/Psi) in [3, 15] GeV/c}"]
 diMu = 0
 leadingMu = 1
 trailingMu = 2
+bothMu = 3
 
 # Legend position (left edge) possibilities
 upperRight = [0.5, 0.75, 0.65, 0.9]
@@ -402,6 +406,39 @@ plotTrailingMuEta_pT3to15 = PlottingVariables(quantity="eta",
                                               legendPositions=[lowerLeft,
                                                                lowerLeft_narrow
                                                                ])
+
+plotBothMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT,
+                                 title="bothMuVsPt", ptCut=[],
+                                 massCut=mass_3to3_2,
+                                 particleSelector=bothMu,
+                                 legendPositions=[upperRight,
+                                                  upperLeft_narrow])
+plotBothMuPt_pT3to15 = PlottingVariables(quantity="pt",
+                                         binning=binning_mu_pT,
+                                         title="\
+                                            bothMuVsPt-restr_jpsiPt_3-15GeV",
+                                         ptCut=pT_3to15,
+                                         massCut=mass_3to3_2,
+                                         particleSelector=bothMu,
+                                         legendPositions=[upperRight,
+                                                          lowerRight_narrow
+                                                          ])
+plotBothMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta,
+                                  title="bothMuVsEta", ptCut=[],
+                                  massCut=mass_3to3_2,
+                                  particleSelector=bothMu,
+                                  legendPositions=[lowerLeft,
+                                                   lowerLeft_narrow])
+plotBothMuEta_pT3to15 = PlottingVariables(quantity="eta",
+                                          binning=binning_mu_eta,
+                                          title="\
+                                            bothMuVsEta-restr_jpsiPt_3-15GeV",
+                                          ptCut=pT_3to15,
+                                          massCut=mass_3to3_2,
+                                          particleSelector=bothMu,
+                                          legendPositions=[lowerLeft,
+                                                           lowerLeft_narrow
+                                                           ])
 
 # Construct plotting lists
 jpsiPlotVars = [plotBackgrnd_ex3to3_2, plotBackgrnd_ex2_8to3_4,
