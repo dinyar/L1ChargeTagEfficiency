@@ -337,75 +337,67 @@ plotEta_pT3to15 = PlottingVariables(quantity="eta", binning=binning_eta,
                                     legendPositions=[lowerLeft,
                                                      lowerLeft_narrow])
 
-plotLeadingMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT,
-                                    title="leadingMuVsPt", ptCut=[],
-                                    massCut=mass_3to3_2,
-                                    particleSelector=leadingMu,
-                                    legendPositions=[upperRight,
-                                                     upperLeft_narrow])
-plotLeadingMuPt_pT3to15 = PlottingVariables(quantity="pt",
-                                            binning=binning_mu_pT,
-                                            title="\
-                                            leadingMuVsPt-restr_jpsiPt_3-15GeV\
-                                            ",
-                                            ptCut=pT_3to15,
-                                            massCut=mass_3to3_2,
-                                            particleSelector=leadingMu,
-                                            legendPositions=[upperRight,
-                                                             lowerRight_narrow
-                                                             ])
-plotLeadingMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta,
-                                     title="leadingMuVsEta", ptCut=[],
-                                     massCut=mass_3to3_2,
-                                     particleSelector=leadingMu,
-                                     legendPositions=[lowerLeft,
-                                                      lowerLeft_narrow])
-plotLeadingMuEta_pT3to15 = PlottingVariables(quantity="eta",
-                                             binning=binning_mu_eta,
-                                             title="\
-                                            leadingMuVsEta-restr_jpsiPt_3-15GeV\
-                                             ",
-                                             ptCut=pT_3to15,
-                                             massCut=mass_3to3_2,
-                                             particleSelector=leadingMu,
-                                             legendPositions=[lowerLeft,
-                                                              lowerLeft_narrow
-                                                              ])
+plotLeadMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT,
+                                 title="leadMuVsPt", ptCut=[],
+                                 massCut=mass_3to3_2,
+                                 particleSelector=leadingMu,
+                                 legendPositions=[upperRight,
+                                                  upperLeft_narrow])
+plotLeadMuPt_pT3to15 = PlottingVariables(quantity="pt",
+                                         binning=binning_mu_pT,
+                                         title="leadMuVsPt-restr_jpsiPt_3-15GeV",
+                                         ptCut=pT_3to15,
+                                         massCut=mass_3to3_2,
+                                         particleSelector=leadingMu,
+                                         legendPositions=[upperRight,
+                                                          lowerRight_narrow
+                                                          ])
+plotLeadMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta,
+                                  title="leadMuVsEta", ptCut=[],
+                                  massCut=mass_3to3_2,
+                                  particleSelector=leadingMu,
+                                  legendPositions=[lowerLeft,
+                                                   lowerLeft_narrow])
+plotLeadMuEta_pT3to15 = PlottingVariables(quantity="eta",
+                                          binning=binning_mu_eta,
+                                          title="leadMuVsEta-restr_jpsiPt_3-15GeV",
+                                          ptCut=pT_3to15,
+                                          massCut=mass_3to3_2,
+                                          particleSelector=leadingMu,
+                                          legendPositions=[lowerLeft,
+                                                           lowerLeft_narrow
+                                                           ])
 
-plotTrailingMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT,
-                                     title="trailingMuVsPt", ptCut=[],
-                                     massCut=mass_3to3_2,
-                                     particleSelector=trailingMu,
-                                     legendPositions=[upperRight,
-                                                      upperLeft_narrow])
-plotTrailingMuPt_pT3to15 = PlottingVariables(quantity="pt",
-                                             binning=binning_mu_pT,
-                                             title="\
-                                             trailingMuVsPt-restr_jpsiPt_3-15GeV\
-                                             ",
-                                             ptCut=pT_3to15,
-                                             massCut=mass_3to3_2,
-                                             particleSelector=trailingMu,
-                                             legendPositions=[upperRight,
-                                                              lowerRight_narrow
-                                                              ])
-plotTrailingMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta,
-                                      title="trailingMuVsEta", ptCut=[],
-                                      massCut=mass_3to3_2,
-                                      particleSelector=trailingMu,
-                                      legendPositions=[lowerLeft,
-                                                       lowerLeft_narrow])
-plotTrailingMuEta_pT3to15 = PlottingVariables(quantity="eta",
-                                              binning=binning_mu_eta,
-                                              title="\
-                                            trailingMuVsEta-restr_jpsiPt_3-15GeV\
-                                              ",
-                                              ptCut=pT_3to15,
-                                              massCut=mass_3to3_2,
-                                              particleSelector=trailingMu,
-                                              legendPositions=[lowerLeft,
-                                                               lowerLeft_narrow
-                                                               ])
+plotTrailMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT,
+                                  title="trailMuVsPt", ptCut=[],
+                                  massCut=mass_3to3_2,
+                                  particleSelector=trailingMu,
+                                  legendPositions=[upperRight,
+                                                   upperLeft_narrow])
+plotTrailMuPt_pT3to15 = PlottingVariables(quantity="pt",
+                                          binning=binning_mu_pT,
+                                          title="trailMuVsPt-restr_jpsiPt_3-15GeV",
+                                          ptCut=pT_3to15,
+                                          massCut=mass_3to3_2,
+                                          particleSelector=trailingMu,
+                                          legendPositions=[upperRight,
+                                                           lowerRight_narrow
+                                                           ])
+plotTrailMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta,
+                                   title="trailMuVsEta", ptCut=[],
+                                   massCut=mass_3to3_2,
+                                   particleSelector=trailingMu,
+                                   legendPositions=[lowerLeft,
+                                                    lowerLeft_narrow])
+plotTrailMuEta_pT3to15 = PlottingVariables(quantity="eta",
+                                           binning=binning_mu_eta,
+                                           title="trailMuVsEta-restr_jpsiPt_3-15GeV",
+                                           ptCut=pT_3to15,
+                                           massCut=mass_3to3_2,
+                                           particleSelector=trailingMu,
+                                           legendPositions=[lowerLeft,
+                                                            lowerLeft_narrow
+                                                            ])
 
 plotBothMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT,
                                  title="bothMuVsPt", ptCut=[],
@@ -415,8 +407,7 @@ plotBothMuPt = PlottingVariables(quantity="pt", binning=binning_mu_pT,
                                                   upperLeft_narrow])
 plotBothMuPt_pT3to15 = PlottingVariables(quantity="pt",
                                          binning=binning_mu_pT,
-                                         title="\
-                                            bothMuVsPt-restr_jpsiPt_3-15GeV",
+                                         title="bothMuVsPt-restr_jpsiPt_3-15GeV",
                                          ptCut=pT_3to15,
                                          massCut=mass_3to3_2,
                                          particleSelector=bothMu,
@@ -431,8 +422,7 @@ plotBothMuEta = PlottingVariables(quantity="eta", binning=binning_mu_eta,
                                                    lowerLeft_narrow])
 plotBothMuEta_pT3to15 = PlottingVariables(quantity="eta",
                                           binning=binning_mu_eta,
-                                          title="\
-                                            bothMuVsEta-restr_jpsiPt_3-15GeV",
+                                          title="bothMuVsEta-restr_jpsiPt_3-15GeV",
                                           ptCut=pT_3to15,
                                           massCut=mass_3to3_2,
                                           particleSelector=bothMu,
@@ -444,9 +434,10 @@ plotBothMuEta_pT3to15 = PlottingVariables(quantity="eta",
 jpsiPlotVars = [plotBackgrnd_ex3to3_2, plotBackgrnd_ex2_8to3_4,
                 plotMass, plotMass_pT3to15, plotPt, plotPt_pT3to15,
                 plotEta, plotEta_pT3to15,
-                plotLeadingMuPt, plotLeadingMuPt_pT3to15,
-                plotLeadingMuEta, plotLeadingMuEta_pT3to15,
-                plotTrailingMuPt, plotTrailingMuPt_pT3to15,
-                plotTrailingMuEta, plotTrailingMuEta_pT3to15]
-
+                plotLeadMuPt, plotLeadMuPt_pT3to15,
+                plotLeadMuEta, plotLeadMuEta_pT3to15,
+                plotTrailMuPt, plotTrailMuPt_pT3to15,
+                plotTrailMuEta, plotTrailMuEta_pT3to15,
+                plotBothMuPt, plotBothMuPt_pT3to15,
+                plotBothMuEta, plotBothMuEta_pT3to15]
 makeJPsiPlots(label, handle, jpsiPlotVars)
