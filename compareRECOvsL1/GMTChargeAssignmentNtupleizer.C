@@ -232,8 +232,17 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
           }
           Float_t ntupleValues[contentList.size()];
 
-          fillNtuple(mu1, mu2, cand1, cand2, diMuMatch, contentList,
-                     ntupleValues);
+          int leadingMu, trailingMu;
+          if (recoMuon_->pt[mu1] > recoMuon_->pt[mu2]) {
+            leadingMu = mu1;
+            trailingMu = mu2;
+          } else {
+            leadingMu = mu2;
+            trailingMu = mu1;
+          }
+
+          fillNtuple(leadingMu, trailingMu, cand1, cand2, diMuMatch,
+                     contentList, ntupleValues);
 
           ntuple->Fill(ntupleValues);
         }
