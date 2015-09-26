@@ -210,7 +210,6 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
       if (!glmucuts(mu1)) {
         continue;
       }
-      // TODO: Also sysmucuts??
       for (int mu2 = mu1 + 1; mu2 < recoMuon_->nMuons; ++mu2) {
         if (!glmucuts(mu2)) {
           continue;
@@ -221,7 +220,7 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
 
         // Find L1 candidates for both muons.
         int cand1, cand2;
-        // #TODO:20 Move this function somewhere central?
+        // #TODO:10 Move this function somewhere central?
         std::pair<bool, bool> diMuMatch =
             matchDiMuons(mu1, mu2, cand1, cand2, GMT, 0, 0.3);
 
@@ -312,8 +311,6 @@ void GMTChargeAssignmentNtupleizer::fillNtuple(
     if (contentList[varIt] == "N_GMT") {
       ntupleValues[varIt] = gmt_->N;
     }
-
-    // #TODO:0 Fill the other di muon values here.
     if (contentList[varIt] == "pT1_GMT") {
       ntupleValues[varIt] = gmt_->Pt[gmtMu1];
     }
