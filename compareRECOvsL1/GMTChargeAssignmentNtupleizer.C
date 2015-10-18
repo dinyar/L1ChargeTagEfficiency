@@ -220,7 +220,7 @@ void GMTChargeAssignmentNtupleizer::run(Long64_t nevents) {
 
         // Find L1 candidates for both muons.
         int cand1, cand2;
-        // #TODO:10 Move this function somewhere central?
+        // #TODO:0 Move this function somewhere central?
         std::pair<bool, bool> diMuMatch =
             matchDiMuons(mu1, mu2, cand1, cand2, GMT, 0, 0.3);
 
