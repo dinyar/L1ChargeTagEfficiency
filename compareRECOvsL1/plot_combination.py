@@ -12,10 +12,9 @@ gROOT.Reset()
 gROOT.SetBatch(kTRUE)
 
 efficiencyList = []
-# #TODO:20 Axis labels
 # Entries:
-# Label (for filename and title) | binning | parameters for project functions
-efficiencyList.append([["deltaR", "#mbox{#DeltaR}"], binningDict["distWideFine"],
+# Label (for filename and axis) | binning | parameters for project functions
+efficiencyList.append([["deltaR", "#mbox{#DeltaR()}#mbox{#mu}^#mbox{-}#mbox{#mu}^#mbox{+}#mbox{)}"], binningDict["distWideFine"],
                        "sqrt((Eta1_reco-Eta2_reco)**2+\
                        (Phi1_reco-Phi2_reco)**2)",
                        cutDict["diMu-gmtPt1-central_etagmt_us"],
