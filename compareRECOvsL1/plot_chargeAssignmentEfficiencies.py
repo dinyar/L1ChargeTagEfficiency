@@ -75,7 +75,7 @@ efficiencyList.append([["jPsi_recoPhi", "#phi(J/#Psi)"],
 # invariant mass
 efficiencyList.append([["jPsi_InvMass", "M(#mu^{+}#mu^{-}) [GeV/c^{2}]"],
                        binningDict["invMassFine"], "InvMass_dimuon",
-                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt_us"],
+                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt_cs"],
                        cutDict["diMu-gmtPt1-mass3to32-central_etagmt"]])
 efficiencyList.append([["jPsi_InvMass", "M(#mu^{+}#mu^{-}) [GeV/c^{2}]"],
                        binningDict["invMassFine"], "InvMass_dimuon",
