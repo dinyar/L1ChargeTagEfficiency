@@ -76,34 +76,34 @@ stackList = []
 # pT plots
 stackList.append([["leadingMu_recoPt", "p_{T}(leading #mu) [GeV/c]"],
                   binningDict["pt25Fine"], "pT1_reco",
-                  cutDict["diMu-gmtPt1-mass3to32_cs"],
+                  cutDict["diMu-gmtPt1-mass3to32_us"],
                   cutDict["diMu-gmtPt1-mass3to32"],
                   stackCutDict["subsystems_mu1"]])
 stackList.append([["trailingMu_recoPt", "p_{T}(trailing #mu) [GeV/c]"],
                   binningDict["pt25Fine"], "pT2_reco",
-                  cutDict["diMu-gmtPt1-mass3to32_cs"],
+                  cutDict["diMu-gmtPt1-mass3to32_us"],
                   cutDict["diMu-gmtPt1-mass3to32"],
                   stackCutDict["subsystems_mu2"]])
 # eta plots
 stackList.append([["leadingMu_recoEta", "#eta(leading #mu)"],
                   binningDict["etaFine"], "Eta1_reco",
-                  cutDict["diMu-gmtPt1-mass3to32_cs"],
+                  cutDict["diMu-gmtPt1-mass3to32_us"],
                   cutDict["diMu-gmtPt1-mass3to32"],
                   stackCutDict["subsystems_mu1"]])
 stackList.append([["trailingMu_recoEta", "#eta(trailing #mu)"],
                   binningDict["etaFine"], "Eta2_reco",
-                  cutDict["diMu-gmtPt1-mass3to32_cs"],
+                  cutDict["diMu-gmtPt1-mass3to32_us"],
                   cutDict["diMu-gmtPt1-mass3to32"],
                   stackCutDict["subsystems_mu2"]])
 # phi plots
 stackList.append([["leadingMu_recoPhi", "#phi (leading #mu)"],
                   binningDict["phiFine"], "Phi1_reco",
-                  cutDict["diMu-gmtPt1-mass3to32_cs"],
+                  cutDict["diMu-gmtPt1-mass3to32_us"],
                   cutDict["diMu-gmtPt1-mass3to32"],
                   stackCutDict["subsystems_mu1"]])
 stackList.append([["trailingMu_recoPhi", "#phi(trailing #mu)"],
                   binningDict["phiFine"], "Phi2_reco",
-                  cutDict["diMu-gmtPt1-mass3to32_cs"],
+                  cutDict["diMu-gmtPt1-mass3to32_us"],
                   cutDict["diMu-gmtPt1-mass3to32"],
                   stackCutDict["subsystems_mu2"]])
 
