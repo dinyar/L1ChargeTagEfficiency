@@ -35,6 +35,10 @@ efficiencyList.append([["jPsi_recoPt", "p_{T}(J/#Psi) [GeV/c]"],
                        binningDict["pt25Fine"], "pT_dimuon",
                        cutDict["diMu-gmtPt1-mass3to32-central_etagmt_us"],
                        cutDict["diMu-gmtPt1-mass3to32-central_etagmt"]])
+efficiencyList.append([["jPsi_recoPt", "p_{T}(J/#Psi) [GeV/c]"],
+                       binningDict["pt25Fine"], "pT_dimuon",
+                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt_cs"],
+                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt"]])
 # efficiencyList.append([["jPsi_recoPt", "p_{T}(J/#Psi) [GeV/c]"],
 #                        binningDict["pt25Fine"], "pT_dimuon",
 #                        cutDict["jpsi-Pt1-central_us"],
@@ -72,6 +76,10 @@ efficiencyList.append([["trailingMu_recoPhi", "#phi(trailing #mu)"],
 efficiencyList.append([["jPsi_recoPhi", "#phi(J/#Psi)"],
                        binningDict["phiFine"], "Phi_dimuon",
                        cutDict["diMu-gmtPt1-mass3to32-central_etagmt_us"],
+                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt"]])
+efficiencyList.append([["jPsi_recoPhi", "#phi(J/#Psi)"],
+                       binningDict["phiFine"], "Phi_dimuon",
+                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt_cs"],
                        cutDict["diMu-gmtPt1-mass3to32-central_etagmt"]])
 # efficiencyList.append([["jPsi_recoPhi", "#phi(J/#Psi)"],
 #                        binningDict["phiFine"], "Phi_dimuon",
