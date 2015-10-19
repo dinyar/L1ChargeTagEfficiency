@@ -52,6 +52,10 @@ efficiencyList.append([["jPsi_recoEta", "#eta(J/#Psi)"],
                        binningDict["etaFine_centralRegion"], "Eta_dimuon",
                        cutDict["diMu-gmtPt1-mass3to32-central_etagmt_us"],
                        cutDict["diMu-gmtPt1-mass3to32-central_etagmt"]])
+efficiencyList.append([["jPsi_recoEta", "#eta(J/#Psi)"],
+                       binningDict["etaFine_centralRegion"], "Eta_dimuon",
+                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt_cs"],
+                       cutDict["diMu-gmtPt1-mass3to32-central_etagmt"]])
 # efficiencyList.append([["jPsi_recoEta", "#eta(J/#Psi)"],
 #                        binningDict["etaFine_centralRegion"], "Eta_dimuon",
 #                        cutDict["jpsi-Pt1-central_us"],
